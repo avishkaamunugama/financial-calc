@@ -1,24 +1,460 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13122.16" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="ekh-c6-WZe">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13104.12"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Navigation Controller-->
+        <scene sceneID="U2F-vb-Mje">
+            <objects>
+                <navigationController id="ekh-c6-WZe" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" largeTitles="YES" id="vUA-Ki-euC">
+                        <rect key="frame" x="0.0" y="44" width="414" height="96"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="86B-we-NpL"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="MUV-it-Gi8" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="509" y="-737"/>
+        </scene>
+        <!--Home View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Home View Controller" id="BYZ-38-t0r" customClass="HomeViewController" customModule="financial_calculator" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" xcode11CocoaTouchSystemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="40" translatesAutoresizingMaskIntoConstraints="NO" id="S3y-qH-aL2">
+                                <rect key="frame" x="0.0" y="140" width="414" height="722"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kme-7u-4X1">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="214"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="tinted" title="Mortgage"/>
+                                        <connections>
+                                            <segue destination="3JL-p2-FQ3" kind="show" id="4S4-Kx-jpu"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6vs-pX-66Z">
+                                        <rect key="frame" x="0.0" y="254" width="414" height="214"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="tinted" title="Savings"/>
+                                        <connections>
+                                            <segue destination="b2m-3c-cz2" kind="show" id="KMh-50-sNo"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5DM-Qv-Y9B">
+                                        <rect key="frame" x="0.0" y="508" width="414" height="214"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="tinted" title="History"/>
+                                        <connections>
+                                            <segue destination="4Zx-Pi-qyL" kind="show" id="0Sd-vO-UFj"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="S3y-qH-aL2" secondAttribute="bottom" id="1hH-tN-zSG"/>
+                            <constraint firstItem="S3y-qH-aL2" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="7hk-fr-euB"/>
+                            <constraint firstItem="S3y-qH-aL2" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="Psg-8d-kpz"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="S3y-qH-aL2" secondAttribute="trailing" id="tr1-fY-kRA"/>
+                        </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="MAi-tI-NNu"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="1638" y="-737"/>
+        </scene>
+        <!--Mortgage View Controller-->
+        <scene sceneID="Zhh-Ji-LWt">
+            <objects>
+                <viewController title="Mortgage View Controller" modalPresentationStyle="fullScreen" id="3JL-p2-FQ3" customClass="MortgageViewController" customModule="financial_calculator" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="EV8-OL-mlb">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="4aU-to-NWx">
+                                <rect key="frame" x="25" y="140" width="364" height="291"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="XzB-KE-gVj">
+                                        <rect key="frame" x="0.0" y="0.0" width="364" height="34"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loan amount" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0XT-gK-Bob">
+                                                <rect key="frame" x="0.0" y="7" width="182" height="20.5"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="CyC-0b-ML1">
+                                                <rect key="frame" x="182" y="0.0" width="182" height="34"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
+                                            </textField>
+                                        </subviews>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="ajQ-Vr-btY">
+                                        <rect key="frame" x="0.0" y="54" width="364" height="34"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Interest rate" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ytk-dB-saW">
+                                                <rect key="frame" x="0.0" y="7" width="182" height="20.5"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="5zH-Qa-S9D">
+                                                <rect key="frame" x="182" y="0.0" width="182" height="34"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
+                                            </textField>
+                                        </subviews>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="jab-dc-y4J">
+                                        <rect key="frame" x="0.0" y="108" width="364" height="34"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Number of years" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aoe-Ff-KI6">
+                                                <rect key="frame" x="0.0" y="7" width="182" height="20.5"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="LXO-MS-6Gy">
+                                                <rect key="frame" x="182" y="0.0" width="182" height="34"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
+                                            </textField>
+                                        </subviews>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="vhR-af-dgl">
+                                        <rect key="frame" x="0.0" y="162" width="364" height="34"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Monthly Payment" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dFu-D6-BN0">
+                                                <rect key="frame" x="0.0" y="7" width="182" height="20.5"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="oeM-IW-jRs">
+                                                <rect key="frame" x="182" y="0.0" width="182" height="34"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
+                                            </textField>
+                                        </subviews>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="CCA-t2-YkL">
+                                        <rect key="frame" x="0.0" y="216" width="364" height="75"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fCk-wD-Q9t">
+                                                <rect key="frame" x="0.0" y="0.0" width="125" height="75"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="75" id="t5b-0G-s1O"/>
+                                                </constraints>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="tinted" title="Save">
+                                                    <fontDescription key="titleFontDescription" type="system" weight="heavy" pointSize="24"/>
+                                                </buttonConfiguration>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="B5Z-uP-eTa">
+                                                <rect key="frame" x="145" y="0.0" width="219" height="75"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="75" id="oXI-NR-1Tm"/>
+                                                </constraints>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="tinted" title="Calculate">
+                                                    <fontDescription key="titleFontDescription" type="system" weight="heavy" pointSize="24"/>
+                                                </buttonConfiguration>
+                                                <connections>
+                                                    <action selector="calculateMortgage:" destination="3JL-p2-FQ3" eventType="touchUpInside" id="4VP-zr-g0e"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="hPC-xQ-Z5n"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="hPC-xQ-Z5n" firstAttribute="trailing" secondItem="4aU-to-NWx" secondAttribute="trailing" constant="25" id="13S-f6-dw9"/>
+                            <constraint firstItem="hPC-xQ-Z5n" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="4aU-to-NWx" secondAttribute="bottom" id="1ms-mU-lBo"/>
+                            <constraint firstItem="4aU-to-NWx" firstAttribute="leading" secondItem="hPC-xQ-Z5n" secondAttribute="leading" constant="25" id="Klg-M6-hiW"/>
+                            <constraint firstItem="4aU-to-NWx" firstAttribute="top" secondItem="hPC-xQ-Z5n" secondAttribute="top" id="goP-5y-590"/>
+                        </constraints>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Item 1" id="ry7-wt-jRn"/>
+                    <navigationItem key="navigationItem" title="Mortgage" largeTitleDisplayMode="always" id="vAU-7f-VOD">
+                        <barButtonItem key="rightBarButtonItem" id="7Dq-bZ-Kif">
+                            <imageReference key="image" image="questionmark.square.fill" catalog="system" symbolScale="large"/>
+                            <connections>
+                                <segue destination="gDC-Ub-3db" kind="presentation" id="Z73-2F-9nX"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="btnCalculateMortgage" destination="B5Z-uP-eTa" id="PsN-fC-vpM"/>
+                        <outletCollection property="txtFieldCollection" destination="CyC-0b-ML1" collectionClass="NSMutableArray" id="NRw-RJ-9I2"/>
+                        <outletCollection property="txtFieldCollection" destination="5zH-Qa-S9D" collectionClass="NSMutableArray" id="LP2-vo-JtW"/>
+                        <outletCollection property="txtFieldCollection" destination="LXO-MS-6Gy" collectionClass="NSMutableArray" id="cIV-Oz-a7f"/>
+                        <outletCollection property="txtFieldCollection" destination="oeM-IW-jRs" collectionClass="NSMutableArray" id="sFe-3h-cy7"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Xaa-sx-aiZ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="509" y="74"/>
+        </scene>
+        <!--Savings View Controller-->
+        <scene sceneID="DiF-If-hSn">
+            <objects>
+                <viewController title="Savings View Controller" modalPresentationStyle="fullScreen" id="b2m-3c-cz2" customClass="SavingsViewController" customModule="financial_calculator" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="iJV-lP-gGp">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="WXt-pD-OmZ">
+                                <rect key="frame" x="25" y="140" width="364" height="342"/>
+                                <subviews>
+                                    <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="vu1-d7-wmI">
+                                        <rect key="frame" x="0.0" y="0.0" width="364" height="32"/>
+                                        <segments>
+                                            <segment title="With RC"/>
+                                            <segment title="Without RC"/>
+                                        </segments>
+                                        <connections>
+                                            <action selector="changedSavingsType:" destination="b2m-3c-cz2" eventType="valueChanged" id="tkU-of-ez5"/>
+                                        </connections>
+                                    </segmentedControl>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="IPw-m8-iKo">
+                                        <rect key="frame" x="0.0" y="51" width="364" height="34"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Monthly amount" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dR5-v4-YfJ">
+                                                <rect key="frame" x="0.0" y="7" width="182" height="20.5"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="D6x-yb-nnW">
+                                                <rect key="frame" x="182" y="0.0" width="182" height="34"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
+                                            </textField>
+                                        </subviews>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="HYg-xE-b6e">
+                                        <rect key="frame" x="0.0" y="105" width="364" height="34"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Annual interest rate" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="91W-WI-I7k">
+                                                <rect key="frame" x="0.0" y="7" width="182" height="20.5"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="39V-aL-lOX">
+                                                <rect key="frame" x="182" y="0.0" width="182" height="34"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
+                                            </textField>
+                                        </subviews>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="LfF-S1-Ofw">
+                                        <rect key="frame" x="0.0" y="159" width="364" height="34"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Number of years" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OHy-YP-93N">
+                                                <rect key="frame" x="0.0" y="7" width="182" height="20.5"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="gct-dX-6Ea">
+                                                <rect key="frame" x="182" y="0.0" width="182" height="34"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
+                                            </textField>
+                                        </subviews>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="0KF-em-oyN">
+                                        <rect key="frame" x="0.0" y="213" width="364" height="34"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Amount Saved" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mI0-h8-WB2">
+                                                <rect key="frame" x="0.0" y="7" width="182" height="20.5"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="LIu-Ik-NAp">
+                                                <rect key="frame" x="182" y="0.0" width="182" height="34"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
+                                            </textField>
+                                        </subviews>
+                                    </stackView>
+                                    <stackView hidden="YES" opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="JZX-Bl-vHP">
+                                        <rect key="frame" x="0.0" y="257" width="364" height="0.0"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Payment Value" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OGU-wd-eL2">
+                                                <rect key="frame" x="0.0" y="0.0" width="182" height="0.0"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="TLh-Do-1YU">
+                                                <rect key="frame" x="182" y="0.0" width="182" height="0.0"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
+                                            </textField>
+                                        </subviews>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="coJ-nQ-2Bz">
+                                        <rect key="frame" x="0.0" y="267" width="364" height="75"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0QN-6I-IKf">
+                                                <rect key="frame" x="0.0" y="0.0" width="125" height="75"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="75" id="jlA-Mb-JYf"/>
+                                                </constraints>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="tinted" title="Save">
+                                                    <fontDescription key="titleFontDescription" type="system" weight="heavy" pointSize="24"/>
+                                                </buttonConfiguration>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BfU-Ub-SLi">
+                                                <rect key="frame" x="145" y="0.0" width="219" height="75"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="75" id="7eB-dw-qRG"/>
+                                                </constraints>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="tinted" title="Calculate">
+                                                    <fontDescription key="titleFontDescription" type="system" weight="heavy" pointSize="24"/>
+                                                </buttonConfiguration>
+                                                <connections>
+                                                    <action selector="calculateMortgage:" destination="3JL-p2-FQ3" eventType="touchUpInside" id="qLd-O4-Nnq"/>
+                                                    <action selector="calculateSavings:" destination="b2m-3c-cz2" eventType="touchUpInside" id="rGK-PE-47R"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="Col-pV-dLh"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="Col-pV-dLh" firstAttribute="trailing" secondItem="WXt-pD-OmZ" secondAttribute="trailing" constant="25" id="6Vm-Ai-Coy"/>
+                            <constraint firstItem="WXt-pD-OmZ" firstAttribute="top" secondItem="Col-pV-dLh" secondAttribute="top" id="OKT-Ka-MPA"/>
+                            <constraint firstItem="WXt-pD-OmZ" firstAttribute="leading" secondItem="Col-pV-dLh" secondAttribute="leading" constant="25" id="OdC-VI-LQj"/>
+                            <constraint firstItem="Col-pV-dLh" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="WXt-pD-OmZ" secondAttribute="bottom" id="hwq-gV-s9K"/>
+                        </constraints>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Item 1" id="azs-4P-wzk"/>
+                    <navigationItem key="navigationItem" title="Compound Savings" id="wfJ-A7-Moe">
+                        <barButtonItem key="rightBarButtonItem" id="gXI-ky-mhV">
+                            <imageReference key="image" image="questionmark.square.fill" catalog="system" symbolScale="large"/>
+                            <connections>
+                                <segue destination="gDC-Ub-3db" kind="presentation" id="Dub-rx-6fe"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="btnCalculateSavings" destination="BfU-Ub-SLi" id="Gal-FJ-cWo"/>
+                        <outlet property="paymentValueView" destination="JZX-Bl-vHP" id="lxk-t0-Shc"/>
+                        <outlet property="segmentedControl" destination="vu1-d7-wmI" id="27b-cK-n4j"/>
+                        <outletCollection property="txtFieldCollection" destination="D6x-yb-nnW" collectionClass="NSMutableArray" id="dVt-vP-Hon"/>
+                        <outletCollection property="txtFieldCollection" destination="39V-aL-lOX" collectionClass="NSMutableArray" id="aYq-Se-8F3"/>
+                        <outletCollection property="txtFieldCollection" destination="gct-dX-6Ea" collectionClass="NSMutableArray" id="YOG-Za-hgR"/>
+                        <outletCollection property="txtFieldCollection" destination="LIu-Ik-NAp" collectionClass="NSMutableArray" id="2OF-Su-xDP"/>
+                        <outletCollection property="txtFieldCollection" destination="TLh-Do-1YU" collectionClass="NSMutableArray" id="1Id-c1-khe"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="WaX-12-615" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1638" y="74"/>
+        </scene>
+        <!--History View Controller-->
+        <scene sceneID="ROI-Rb-0Nz">
+            <objects>
+                <viewController title="History View Controller" id="4Zx-Pi-qyL" customClass="HistoryViewController" customModule="financial_calculator" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="zQK-ZH-XYg">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="4r8-1y-Fr5"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Item 2" id="nGt-pz-OLb"/>
+                    <navigationItem key="navigationItem" title="History" id="SeK-Pd-Nnd">
+                        <barButtonItem key="rightBarButtonItem" id="1Be-Ia-qdL">
+                            <imageReference key="image" image="questionmark.square.fill" catalog="system" symbolScale="large"/>
+                            <connections>
+                                <segue destination="gDC-Ub-3db" kind="presentation" id="kwX-fv-hDM"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="wJQ-f3-VMd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2700" y="74"/>
+        </scene>
+        <!--Help View Controller-->
+        <scene sceneID="N2c-3b-CCh">
+            <objects>
+                <viewController modalPresentationStyle="overCurrentContext" id="gDC-Ub-3db" customClass="HelpViewController" customModule="financial_calculator" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="KHY-b0-3dS">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.29999999999999999" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="img-help-mortgage" translatesAutoresizingMaskIntoConstraints="NO" id="jhS-cx-QXk">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="close" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qf8-wk-ONA">
+                                <rect key="frame" x="344" y="44" width="50" height="50"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="8be-5Q-Rqj"/>
+                                    <constraint firstAttribute="width" constant="50" id="Kak-xO-tGp"/>
+                                </constraints>
+                                <buttonConfiguration key="configuration" style="plain"/>
+                                <connections>
+                                    <action selector="closeHelpView:" destination="gDC-Ub-3db" eventType="touchUpInside" id="TBC-na-lC6"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="9Gx-0X-FKy"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="qf8-wk-ONA" firstAttribute="trailing" secondItem="KHY-b0-3dS" secondAttribute="trailingMargin" id="2xw-3G-tw9"/>
+                            <constraint firstItem="jhS-cx-QXk" firstAttribute="top" secondItem="KHY-b0-3dS" secondAttribute="top" id="FmV-ed-fbT"/>
+                            <constraint firstAttribute="trailing" secondItem="jhS-cx-QXk" secondAttribute="trailing" id="Fqe-dE-Ss7"/>
+                            <constraint firstAttribute="bottom" secondItem="jhS-cx-QXk" secondAttribute="bottom" id="h99-d0-5nd"/>
+                            <constraint firstItem="qf8-wk-ONA" firstAttribute="top" secondItem="9Gx-0X-FKy" secondAttribute="top" id="sDM-KX-V0Y"/>
+                            <constraint firstItem="jhS-cx-QXk" firstAttribute="leading" secondItem="KHY-b0-3dS" secondAttribute="leading" id="yRf-B6-Jtw"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="Y82-4B-12W"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="5DN-vR-KNu" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1638" y="958"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="kwX-fv-hDM"/>
+    </inferredMetricsTieBreakers>
+    <resources>
+        <image name="img-help-mortgage" width="1170" height="2532"/>
+        <image name="questionmark.square.fill" catalog="system" width="128" height="114"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
 </document>
