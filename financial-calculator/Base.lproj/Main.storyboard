@@ -81,7 +81,7 @@
         <!--Mortgage View Controller-->
         <scene sceneID="Zhh-Ji-LWt">
             <objects>
-                <viewController title="Mortgage View Controller" modalPresentationStyle="fullScreen" id="3JL-p2-FQ3" customClass="MortgageViewController" customModule="financial_calculator" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="mortgageView" title="Mortgage View Controller" modalPresentationStyle="fullScreen" id="3JL-p2-FQ3" customClass="MortgageViewController" customModule="financial_calculator" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="EV8-OL-mlb">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -165,6 +165,9 @@
                                                 <buttonConfiguration key="configuration" style="tinted" title="Save">
                                                     <fontDescription key="titleFontDescription" type="system" weight="heavy" pointSize="24"/>
                                                 </buttonConfiguration>
+                                                <connections>
+                                                    <action selector="saveMortgage:" destination="3JL-p2-FQ3" eventType="touchUpInside" id="i2g-A2-O98"/>
+                                                </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="B5Z-uP-eTa">
                                                 <rect key="frame" x="145" y="0.0" width="219" height="75"/>
@@ -204,6 +207,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="btnCalculateMortgage" destination="B5Z-uP-eTa" id="PsN-fC-vpM"/>
+                        <outlet property="btnSaveMortgage" destination="fCk-wD-Q9t" id="tEW-IN-JcQ"/>
                         <outletCollection property="txtFieldCollection" destination="CyC-0b-ML1" collectionClass="NSMutableArray" id="NRw-RJ-9I2"/>
                         <outletCollection property="txtFieldCollection" destination="5zH-Qa-S9D" collectionClass="NSMutableArray" id="LP2-vo-JtW"/>
                         <outletCollection property="txtFieldCollection" destination="LXO-MS-6Gy" collectionClass="NSMutableArray" id="cIV-Oz-a7f"/>
@@ -387,8 +391,20 @@
                     <view key="view" contentMode="scaleToFill" id="zQK-ZH-XYg">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="ZCb-pC-z7S">
+                                <rect key="frame" x="0.0" y="140" width="414" height="722"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </tableView>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="4r8-1y-Fr5"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="4r8-1y-Fr5" firstAttribute="bottom" secondItem="ZCb-pC-z7S" secondAttribute="bottom" id="8Ic-LL-aYX"/>
+                            <constraint firstItem="ZCb-pC-z7S" firstAttribute="leading" secondItem="4r8-1y-Fr5" secondAttribute="leading" id="8Xv-a3-4Fh"/>
+                            <constraint firstItem="4r8-1y-Fr5" firstAttribute="trailing" secondItem="ZCb-pC-z7S" secondAttribute="trailing" id="VJC-FJ-I9a"/>
+                            <constraint firstItem="ZCb-pC-z7S" firstAttribute="top" secondItem="4r8-1y-Fr5" secondAttribute="top" id="ngg-Ul-Zwg"/>
+                        </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Item 2" id="nGt-pz-OLb"/>
                     <navigationItem key="navigationItem" title="History" id="SeK-Pd-Nnd">
@@ -399,6 +415,9 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="historyTableView" destination="ZCb-pC-z7S" id="VxS-6e-UiW"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wJQ-f3-VMd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -448,7 +467,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="kwX-fv-hDM"/>
+        <segue reference="Z73-2F-9nX"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="img-help-mortgage" width="1170" height="2532"/>

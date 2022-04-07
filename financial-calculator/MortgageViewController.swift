@@ -12,19 +12,35 @@ class MortgageViewController: UIViewController {
     
     @IBOutlet var txtFieldCollection: [UITextField]!
     @IBOutlet weak var btnCalculateMortgage: UIButton!
+    @IBOutlet weak var btnSaveMortgage: UIButton!
     
     var loanAmount: Float = 0.0
     var interestRate: Float = 0.0
     var numberOfYears: Float = 0.0
     var monthlyPayment: Float = 0.0
+    var mortgage : Mortgage = Mortgage()
+    var prevMorgage : Mortgage?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if prevMorgage == nil && mortageList!.count > 0 {
+            prevMorgage = mortageList?.last
+        }
+        
+        if let lastMortgage = prevMorgage {
+            txtFieldCollection[0].text = "\(lastMortgage.loanAmount)"
+            txtFieldCollection[1].text = "\(lastMortgage.interestRate)"
+            txtFieldCollection[2].text = "\(lastMortgage.numOfYears)"
+            txtFieldCollection[3].text = "\(lastMortgage.monthlyPayment)"
+        }
+        
         
         for txtField: UITextField in txtFieldCollection {
             
             txtField.delegate = self
             addDoneButtonOnNumpad(textField: txtField)
+            getTextFromTextField(txtField)
         }
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(self.handleTap(_:)))
@@ -46,7 +62,7 @@ class MortgageViewController: UIViewController {
         }
         
         // calculation
-        let mortgage : Mortgage = Mortgage(loanAmount: self.loanAmount, interestRate: self.interestRate, numOfYears: self.numberOfYears)
+        mortgage = Mortgage(loanAmount: self.loanAmount, interestRate: self.interestRate, numOfYears: self.numberOfYears, monthlyPayment: self.monthlyPayment)
         
         var mothlyPaymentTxt: Float = Formulae.calculateMortgage(mortgageDetail: mortgage)
         
@@ -54,8 +70,23 @@ class MortgageViewController: UIViewController {
             mothlyPaymentTxt  = 0.0
         }
         
+        self.monthlyPayment = mothlyPaymentTxt
+        
+        
         txtFieldCollection[3].text = String(format: "%.2f", mothlyPaymentTxt)
 
+    }
+    
+    @IBAction func saveMortgage(_ sender: Any) {
+        
+        mortgage = Mortgage(loanAmount: self.loanAmount, interestRate: self.interestRate, numOfYears: self.numberOfYears, monthlyPayment: self.monthlyPayment)
+                
+        mortageList?.append(mortgage)
+        
+        for txtField: UITextField in txtFieldCollection {
+            txtField.resignFirstResponder()
+            txtField.text = ""
+        }
     }
     
     func addDoneButtonOnNumpad(textField: UITextField) {
