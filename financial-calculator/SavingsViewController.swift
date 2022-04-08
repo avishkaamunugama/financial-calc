@@ -19,13 +19,39 @@ class SavingsViewController: UIViewController {
     var interestRate: Float = 0.0
     var numberOfYears: Float = 0.0
     var amountSaved: Float = 0.0
+    var regularContribution: Float = 0.0
+    
+    var saving : Saving = Saving()
+    var prevSaving : Saving?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        loadPreviousCalculation()
+        configureTextFields()
+    }
+    
+    func loadPreviousCalculation() {
+        
+        if prevSaving == nil && savingsList!.count > 0 {
+            prevSaving = savingsList?.last
+        }
+        
+        if let lastSaving = prevSaving {
+            txtFieldCollection[0].text = "\(lastSaving.montlyPayment)"
+            txtFieldCollection[1].text = "\(lastSaving.interestRate)"
+            txtFieldCollection[2].text = "\(lastSaving.numOfYears)"
+            txtFieldCollection[3].text = "\(lastSaving.savedAmount)"
+            txtFieldCollection[4].text = "\(lastSaving.regularContributionValue)"
+        }
+    }
+    
+    func configureTextFields() {
         for txtField: UITextField in txtFieldCollection {
+            
             txtField.delegate = self
             addDoneButtonOnNumpad(textField: txtField)
+            getTextFromTextField(txtField)
         }
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(self.handleTap(_:)))
@@ -37,13 +63,15 @@ class SavingsViewController: UIViewController {
         for txtField: UITextField in txtFieldCollection {
             txtField.resignFirstResponder()
         }
-      }
+    }
     
     @IBAction func changedSavingsType(_ sender: UISegmentedControl) {
         
         switch segmentedControl.selectedSegmentIndex {
         case 0:
             paymentValueView.isHidden = true
+            self.txtFieldCollection[4].text = ""
+            self.regularContribution = 0.0
         case 1:
             paymentValueView.isHidden = false
         default:
@@ -58,15 +86,32 @@ class SavingsViewController: UIViewController {
             txtField.resignFirstResponder()
         }
         
-        let saving : Saving = Saving(interestRate: self.interestRate, montlyPayment: self.monthlyAmount, numOfYears: self.numberOfYears)
+        saving = Saving(interestRate: self.interestRate, montlyPayment: self.monthlyAmount, numOfYears: self.numberOfYears, savedAmount: self.amountSaved, regularContributionValue: self.regularContribution)
         
-        var amountSavedTxt: Float = Formulae.calculateSavings(savingsDetail: saving)
+        let amountSavedTxt: Float = Formulae.calculateSavings(savingsDetail: saving)
         
-        if amountSavedTxt.isNaN {
-            amountSavedTxt  = 0.0
-        }
-        
+        saving.savedAmount = amountSavedTxt
         txtFieldCollection[3].text = String(format: "%.2f", amountSavedTxt)
+    }
+    
+    @IBAction func saveSaving(_ sender: Any) {
+        
+        savingsList?.append(saving)
+        
+        for txtField: UITextField in txtFieldCollection {
+            txtField.resignFirstResponder()
+            txtField.text = ""
+        }
+    }
+    
+    @IBAction func viewHelpScreen(_ sender: UIBarButtonItem) {
+        
+        let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        if let destVC = storyBoard.instantiateViewController(withIdentifier: "helpView") as? HelpViewController {
+            
+            destVC.modalTransitionStyle = .crossDissolve
+            self.navigationController?.present(destVC, animated: true)
+        }
     }
     
     func addDoneButtonOnNumpad(textField: UITextField) {
@@ -84,9 +129,9 @@ class SavingsViewController: UIViewController {
     
 }
 
+
 extension SavingsViewController: UITextFieldDelegate {
     
-
     func textFieldDidChangeSelection(_ textField: UITextField) {
         getTextFromTextField(textField)
     }
@@ -94,31 +139,19 @@ extension SavingsViewController: UITextFieldDelegate {
     func getTextFromTextField(_ textField: UITextField) {
         
         if textField == self.txtFieldCollection[0] {
-            
-            if let amount = Float(textField.text!), amount > 0.0 {
-                self.monthlyAmount = amount
-            }
-            else {
-                self.monthlyAmount = 0.0
-            }
+            self.monthlyAmount = Float(textField.text!) ?? 0.0
         }
         else if textField == self.txtFieldCollection[1] {
-            
-            if let amount = Float(textField.text!), amount > 0.0 {
-                self.interestRate = amount
-            }
-            else {
-                self.interestRate = 0.0
-            }
+            self.interestRate = Float(textField.text!) ?? 0.0
         }
         else if textField == self.txtFieldCollection[2] {
-            
-            if let amount = Float(textField.text!), amount > 0.0 {
-                self.numberOfYears = amount
-            }
-            else {
-                self.numberOfYears = 0.0
-            }
+            self.numberOfYears = Float(textField.text!) ?? 0.0
+        }
+        else if textField == self.txtFieldCollection[3] {
+            self.amountSaved = Float(textField.text!) ?? 0.0
+        }
+        else if textField == self.txtFieldCollection[4] {
+            self.regularContribution = Float(textField.text!) ?? 0.0
         }
     }
 }

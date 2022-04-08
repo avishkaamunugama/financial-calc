@@ -18,24 +18,19 @@ class MortgageViewController: UIViewController {
     var interestRate: Float = 0.0
     var numberOfYears: Float = 0.0
     var monthlyPayment: Float = 0.0
+    
     var mortgage : Mortgage = Mortgage()
     var prevMorgage : Mortgage?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if prevMorgage == nil && mortageList!.count > 0 {
-            prevMorgage = mortageList?.last
-        }
-        
-        if let lastMortgage = prevMorgage {
-            txtFieldCollection[0].text = "\(lastMortgage.loanAmount)"
-            txtFieldCollection[1].text = "\(lastMortgage.interestRate)"
-            txtFieldCollection[2].text = "\(lastMortgage.numOfYears)"
-            txtFieldCollection[3].text = "\(lastMortgage.monthlyPayment)"
-        }
-        
-        
+        loadPreviousCalculation()
+        configureTextFields()
+    }
+    
+    
+    func configureTextFields() {
         for txtField: UITextField in txtFieldCollection {
             
             txtField.delegate = self
@@ -46,6 +41,20 @@ class MortgageViewController: UIViewController {
         let tap = UITapGestureRecognizer(target: self, action: #selector(self.handleTap(_:)))
         self.view.addGestureRecognizer(tap)
         self.view.isUserInteractionEnabled = true
+    }
+    
+    
+    func loadPreviousCalculation() {
+        if prevMorgage == nil && mortgageList!.count > 0 {
+            prevMorgage = mortgageList?.last
+        }
+        
+        if let lastMortgage = prevMorgage {
+            txtFieldCollection[0].text = "\(lastMortgage.loanAmount)"
+            txtFieldCollection[1].text = "\(lastMortgage.interestRate)"
+            txtFieldCollection[2].text = "\(lastMortgage.numOfYears)"
+            txtFieldCollection[3].text = "\(lastMortgage.monthlyPayment)"
+        }
     }
 
     @objc func handleTap(_ sender: UITapGestureRecognizer) {
@@ -64,28 +73,29 @@ class MortgageViewController: UIViewController {
         // calculation
         mortgage = Mortgage(loanAmount: self.loanAmount, interestRate: self.interestRate, numOfYears: self.numberOfYears, monthlyPayment: self.monthlyPayment)
         
-        var mothlyPaymentTxt: Float = Formulae.calculateMortgage(mortgageDetail: mortgage)
+        let mothlyPaymentTxt: Float = Formulae.calculateMortgage(mortgageDetail: mortgage)
         
-        if mothlyPaymentTxt.isNaN {
-            mothlyPaymentTxt  = 0.0
-        }
-        
-        self.monthlyPayment = mothlyPaymentTxt
-        
-        
+        mortgage.monthlyPayment = mothlyPaymentTxt
         txtFieldCollection[3].text = String(format: "%.2f", mothlyPaymentTxt)
-
     }
     
     @IBAction func saveMortgage(_ sender: Any) {
         
-        mortgage = Mortgage(loanAmount: self.loanAmount, interestRate: self.interestRate, numOfYears: self.numberOfYears, monthlyPayment: self.monthlyPayment)
-                
-        mortageList?.append(mortgage)
+        mortgageList?.append(mortgage)
         
         for txtField: UITextField in txtFieldCollection {
             txtField.resignFirstResponder()
             txtField.text = ""
+        }
+    }
+    
+    @IBAction func viewHelpScreen(_ sender: UIBarButtonItem) {
+        
+        let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        if let destVC = storyBoard.instantiateViewController(withIdentifier: "helpView") as? HelpViewController {
+            
+            destVC.modalTransitionStyle = .crossDissolve
+            self.navigationController?.present(destVC, animated: true)
         }
     }
     
@@ -101,12 +111,11 @@ class MortgageViewController: UIViewController {
         keypadToolbar.sizeToFit()
         textField.inputAccessoryView = keypadToolbar
     }
-    
 }
+
 
 extension MortgageViewController: UITextFieldDelegate {
     
-
     func textFieldDidChangeSelection(_ textField: UITextField) {
         getTextFromTextField(textField)
     }
@@ -114,31 +123,16 @@ extension MortgageViewController: UITextFieldDelegate {
     func getTextFromTextField(_ textField: UITextField) {
         
         if textField == self.txtFieldCollection[0] {
-            
-            if let amount = Float(textField.text!), amount > 0.0 {
-                self.loanAmount = amount
-            }
-            else {
-                self.loanAmount = 0.0
-            }
+            self.loanAmount = Float(textField.text!) ?? 0.0
         }
         else if textField == self.txtFieldCollection[1] {
-            
-            if let amount = Float(textField.text!), amount > 0.0 {
-                self.interestRate = amount
-            }
-            else {
-                self.interestRate = 0.0
-            }
+            self.interestRate = Float(textField.text!) ?? 0.0
         }
         else if textField == self.txtFieldCollection[2] {
-            
-            if let amount = Float(textField.text!), amount > 0.0 {
-                self.numberOfYears = amount
-            }
-            else {
-                self.numberOfYears = 0.0
-            }
+            self.numberOfYears = Float(textField.text!) ?? 0.0
+        }
+        else if textField == self.txtFieldCollection[3] {
+            self.monthlyPayment = Float(textField.text!) ?? 0.0
         }
     }
 }

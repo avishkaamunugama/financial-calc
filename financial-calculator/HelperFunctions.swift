@@ -7,42 +7,61 @@
 
 import Foundation
 
-var mortageList:[Mortgage]? {
+let mortgageKey: String = "mortgage-list"
+let savingsKey: String = "savings-list"
+
+var pastCalculations : [Any]?
+
+var mortgageList:[Mortgage]? {
     didSet{
-        saveMortgage(mortages: mortageList!)
+        saveMortgage(mortgages: mortgageList!)
     }
 }
-//var savingsList:[Saving]?
 
-func saveMortgage(mortages:[Mortgage]) {
-    print(mortages)
+var savingsList:[Saving]? {
+    didSet{
+        saveSavings(savings: savingsList!)
+    }
+}
+
+func saveMortgage(mortgages:[Mortgage]) {
     
-    if let encodedData = try? JSONEncoder().encode(mortages) {
-        UserDefaults.standard.set(encodedData, forKey: "mortgage-list")
+    if let encodedData = try? JSONEncoder().encode(mortgages) {
+        UserDefaults.standard.set(encodedData, forKey: mortgageKey)
     }
 }
 
-//func saveSavings(savingsList:[Saving]) {
-//    UserDefaults.standard.set(savingsList, forKey: "savings-list")
-//}
+func saveSavings(savings:[Saving]) {
+
+    if let encodedData = try? JSONEncoder().encode(savings) {
+        UserDefaults.standard.set(encodedData, forKey: savingsKey)
+    }
+}
 
 func fetchMortgage() -> [Mortgage]? {
     
     guard
-        let data = UserDefaults.standard.data(forKey: "mortgage-list"),
-        let savedMortages = try? JSONDecoder().decode([Mortgage].self, from: data)
+        let data = UserDefaults.standard.data(forKey: mortgageKey),
+        let savedmortgages = try? JSONDecoder().decode([Mortgage].self, from: data)
     else {
         return nil
     }
     
-    return savedMortages
+    return savedmortgages
 }
 
-//func fetchSavings() -> [Saving]? {
-//    if let savings = UserDefaults.standard.array(forKey: "savings-list") as? [Saving] {
-//        return savings
-//    }
-//    else {
-//        return nil
-//    }
-//}
+func fetchSavings() -> [Saving]? {
+    
+    guard
+        let data = UserDefaults.standard.data(forKey: savingsKey),
+        let savedSavings = try? JSONDecoder().decode([Saving].self, from: data)
+    else {
+        return nil
+    }
+    
+    return savedSavings
+}
+
+func updateCalcHistory() {
+    pastCalculations = (mortgageList! + savingsList!)
+}

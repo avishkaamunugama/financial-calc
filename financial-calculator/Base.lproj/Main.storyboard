@@ -34,10 +34,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="40" translatesAutoresizingMaskIntoConstraints="NO" id="S3y-qH-aL2">
-                                <rect key="frame" x="0.0" y="140" width="414" height="722"/>
+                                <rect key="frame" x="0.0" y="88" width="414" height="725"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kme-7u-4X1">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="214"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="215"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="tinted" title="Mortgage"/>
                                         <connections>
@@ -45,7 +45,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6vs-pX-66Z">
-                                        <rect key="frame" x="0.0" y="254" width="414" height="214"/>
+                                        <rect key="frame" x="0.0" y="255" width="414" height="215"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="tinted" title="Savings"/>
                                         <connections>
@@ -53,7 +53,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5DM-Qv-Y9B">
-                                        <rect key="frame" x="0.0" y="508" width="414" height="214"/>
+                                        <rect key="frame" x="0.0" y="510" width="414" height="215"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="tinted" title="History"/>
                                         <connections>
@@ -72,7 +72,15 @@
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="S3y-qH-aL2" secondAttribute="trailing" id="tr1-fY-kRA"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="MAi-tI-NNu"/>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" largeTitleDisplayMode="never" id="MAi-tI-NNu">
+                        <barButtonItem key="rightBarButtonItem" image="icon_help" id="PEh-r9-fYY">
+                            <connections>
+                                <action selector="viewHelpScreen:" destination="3JL-p2-FQ3" id="VwI-6r-krM"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
@@ -198,10 +206,9 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="Item 1" id="ry7-wt-jRn"/>
                     <navigationItem key="navigationItem" title="Mortgage" largeTitleDisplayMode="always" id="vAU-7f-VOD">
-                        <barButtonItem key="rightBarButtonItem" id="7Dq-bZ-Kif">
-                            <imageReference key="image" image="questionmark.square.fill" catalog="system" symbolScale="large"/>
+                        <barButtonItem key="rightBarButtonItem" image="icon_help" id="7Dq-bZ-Kif">
                             <connections>
-                                <segue destination="gDC-Ub-3db" kind="presentation" id="Z73-2F-9nX"/>
+                                <action selector="viewHelpScreen:" destination="3JL-p2-FQ3" id="WYU-E7-0zy"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -232,8 +239,8 @@
                                     <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="vu1-d7-wmI">
                                         <rect key="frame" x="0.0" y="0.0" width="364" height="32"/>
                                         <segments>
-                                            <segment title="With RC"/>
-                                            <segment title="Without RC"/>
+                                            <segment title="Simple"/>
+                                            <segment title="Compound"/>
                                         </segments>
                                         <connections>
                                             <action selector="changedSavingsType:" destination="b2m-3c-cz2" eventType="valueChanged" id="tkU-of-ez5"/>
@@ -331,6 +338,9 @@
                                                 <buttonConfiguration key="configuration" style="tinted" title="Save">
                                                     <fontDescription key="titleFontDescription" type="system" weight="heavy" pointSize="24"/>
                                                 </buttonConfiguration>
+                                                <connections>
+                                                    <action selector="saveSaving:" destination="b2m-3c-cz2" eventType="touchUpInside" id="15p-cv-cXX"/>
+                                                </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BfU-Ub-SLi">
                                                 <rect key="frame" x="145" y="0.0" width="219" height="75"/>
@@ -361,11 +371,11 @@
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Item 1" id="azs-4P-wzk"/>
-                    <navigationItem key="navigationItem" title="Compound Savings" id="wfJ-A7-Moe">
+                    <navigationItem key="navigationItem" title="Savings" largeTitleDisplayMode="always" id="wfJ-A7-Moe">
                         <barButtonItem key="rightBarButtonItem" id="gXI-ky-mhV">
-                            <imageReference key="image" image="questionmark.square.fill" catalog="system" symbolScale="large"/>
+                            <imageReference key="image" image="icon_help" symbolScale="large"/>
                             <connections>
-                                <segue destination="gDC-Ub-3db" kind="presentation" id="Dub-rx-6fe"/>
+                                <action selector="viewHelpScreen:" destination="b2m-3c-cz2" id="2Gx-s8-raK"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -393,7 +403,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="ZCb-pC-z7S">
-                                <rect key="frame" x="0.0" y="140" width="414" height="722"/>
+                                <rect key="frame" x="0.0" y="140" width="414" height="673"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </tableView>
                         </subviews>
@@ -407,13 +417,20 @@
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Item 2" id="nGt-pz-OLb"/>
-                    <navigationItem key="navigationItem" title="History" id="SeK-Pd-Nnd">
-                        <barButtonItem key="rightBarButtonItem" id="1Be-Ia-qdL">
-                            <imageReference key="image" image="questionmark.square.fill" catalog="system" symbolScale="large"/>
-                            <connections>
-                                <segue destination="gDC-Ub-3db" kind="presentation" id="kwX-fv-hDM"/>
-                            </connections>
-                        </barButtonItem>
+                    <navigationItem key="navigationItem" title="History" largeTitleDisplayMode="always" id="SeK-Pd-Nnd">
+                        <rightBarButtonItems>
+                            <barButtonItem id="1Be-Ia-qdL">
+                                <imageReference key="image" image="icon_help" symbolScale="large"/>
+                                <connections>
+                                    <action selector="viewHelpScreen:" destination="4Zx-Pi-qyL" id="2ch-EQ-1l4"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem image="icon_clear" id="pQl-8D-H16">
+                                <connections>
+                                    <action selector="clearHistory:" destination="4Zx-Pi-qyL" id="Er7-bx-QFd"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <connections>
                         <outlet property="historyTableView" destination="ZCb-pC-z7S" id="VxS-6e-UiW"/>
@@ -426,52 +443,51 @@
         <!--Help View Controller-->
         <scene sceneID="N2c-3b-CCh">
             <objects>
-                <viewController modalPresentationStyle="overCurrentContext" id="gDC-Ub-3db" customClass="HelpViewController" customModule="financial_calculator" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="helpView" modalPresentationStyle="overFullScreen" id="gDC-Ub-3db" customClass="HelpViewController" customModule="financial_calculator" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="KHY-b0-3dS">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.29999999999999999" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="img-help-mortgage" translatesAutoresizingMaskIntoConstraints="NO" id="jhS-cx-QXk">
+                            <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g2r-2C-Idb">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </view>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="jhS-cx-QXk">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="close" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qf8-wk-ONA">
-                                <rect key="frame" x="344" y="44" width="50" height="50"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="8be-5Q-Rqj"/>
-                                    <constraint firstAttribute="width" constant="50" id="Kak-xO-tGp"/>
-                                </constraints>
-                                <buttonConfiguration key="configuration" style="plain"/>
-                                <connections>
-                                    <action selector="closeHelpView:" destination="gDC-Ub-3db" eventType="touchUpInside" id="TBC-na-lC6"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="9Gx-0X-FKy"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="qf8-wk-ONA" firstAttribute="trailing" secondItem="KHY-b0-3dS" secondAttribute="trailingMargin" id="2xw-3G-tw9"/>
+                            <constraint firstAttribute="trailing" secondItem="g2r-2C-Idb" secondAttribute="trailing" id="68h-HV-g4r"/>
+                            <constraint firstItem="g2r-2C-Idb" firstAttribute="top" secondItem="KHY-b0-3dS" secondAttribute="top" id="9w0-XX-sBJ"/>
                             <constraint firstItem="jhS-cx-QXk" firstAttribute="top" secondItem="KHY-b0-3dS" secondAttribute="top" id="FmV-ed-fbT"/>
                             <constraint firstAttribute="trailing" secondItem="jhS-cx-QXk" secondAttribute="trailing" id="Fqe-dE-Ss7"/>
+                            <constraint firstItem="jhS-cx-QXk" firstAttribute="leading" secondItem="KHY-b0-3dS" secondAttribute="leading" id="JFN-d1-pb8"/>
+                            <constraint firstAttribute="trailing" secondItem="jhS-cx-QXk" secondAttribute="trailing" id="WTK-Mb-xeB"/>
+                            <constraint firstItem="jhS-cx-QXk" firstAttribute="top" secondItem="KHY-b0-3dS" secondAttribute="top" id="Yv7-CW-0JY"/>
                             <constraint firstAttribute="bottom" secondItem="jhS-cx-QXk" secondAttribute="bottom" id="h99-d0-5nd"/>
-                            <constraint firstItem="qf8-wk-ONA" firstAttribute="top" secondItem="9Gx-0X-FKy" secondAttribute="top" id="sDM-KX-V0Y"/>
+                            <constraint firstItem="g2r-2C-Idb" firstAttribute="leading" secondItem="KHY-b0-3dS" secondAttribute="leading" id="q4u-5l-pTU"/>
+                            <constraint firstAttribute="bottom" secondItem="g2r-2C-Idb" secondAttribute="bottom" id="sIo-8V-1Xk"/>
+                            <constraint firstAttribute="bottom" secondItem="jhS-cx-QXk" secondAttribute="bottom" id="x5P-rp-60P"/>
                             <constraint firstItem="jhS-cx-QXk" firstAttribute="leading" secondItem="KHY-b0-3dS" secondAttribute="leading" id="yRf-B6-Jtw"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="Y82-4B-12W"/>
+                    <connections>
+                        <outlet property="instructionsImgView" destination="jhS-cx-QXk" id="Zxk-S7-rW0"/>
+                        <outlet property="transparentView" destination="g2r-2C-Idb" id="MsK-bR-cTK"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5DN-vR-KNu" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1638" y="958"/>
+            <point key="canvasLocation" x="2699" y="-737"/>
         </scene>
     </scenes>
-    <inferredMetricsTieBreakers>
-        <segue reference="Z73-2F-9nX"/>
-    </inferredMetricsTieBreakers>
     <resources>
-        <image name="img-help-mortgage" width="1170" height="2532"/>
-        <image name="questionmark.square.fill" catalog="system" width="128" height="114"/>
+        <image name="icon_clear" width="30" height="30"/>
+        <image name="icon_help" width="30" height="30"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

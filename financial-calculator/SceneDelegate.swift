@@ -41,12 +41,18 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Use this method to undo the changes made on entering the background.
         
         if let mortgages = fetchMortgage() {
-            mortageList = mortgages
+            mortgageList = mortgages
         }
         else {
-            mortageList = [Mortgage]()
+            mortgageList = [Mortgage]()
         }
-    
+        
+        if let savings = fetchSavings() {
+            savingsList = savings
+        }
+        else {
+            savingsList = [Saving]()
+        }
     }
 
     func sceneDidEnterBackground(_ scene: UIScene) {

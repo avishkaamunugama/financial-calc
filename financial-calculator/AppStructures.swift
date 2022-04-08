@@ -1,5 +1,5 @@
 //
-//  FinanceAppStructures.swift
+//  AppStructures.swift
 //  simple-financial-calculator
 //
 //  Created by Avishka Amunugama on 4/6/22.
