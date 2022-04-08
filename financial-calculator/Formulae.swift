@@ -25,7 +25,7 @@ class Formulae {
         let r: Float = savingsDetail.interestRate / 100.0
         let t: Float = savingsDetail.numOfYears
         let n: Float = 12
-
+        
         let f1 = pow(Float(1+(r/n)), Float(n*t))
         let f2 = pmt * ((f1 - 1) / (r/n))
         

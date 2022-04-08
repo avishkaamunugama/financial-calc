@@ -32,7 +32,7 @@ func saveMortgage(mortgages:[Mortgage]) {
 }
 
 func saveSavings(savings:[Saving]) {
-
+    
     if let encodedData = try? JSONEncoder().encode(savings) {
         UserDefaults.standard.set(encodedData, forKey: savingsKey)
     }

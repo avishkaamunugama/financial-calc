@@ -8,7 +8,7 @@
 import UIKit
 
 class SavingsViewController: UIViewController {
-
+    
     @IBOutlet var txtFieldCollection: [UITextField]!
     @IBOutlet weak var btnCalculateSavings: UIButton!
     @IBOutlet weak var segmentedControl: UISegmentedControl!

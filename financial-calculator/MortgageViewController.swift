@@ -8,7 +8,6 @@
 import UIKit
 
 class MortgageViewController: UIViewController {
-
     
     @IBOutlet var txtFieldCollection: [UITextField]!
     @IBOutlet weak var btnCalculateMortgage: UIButton!
@@ -56,7 +55,7 @@ class MortgageViewController: UIViewController {
             txtFieldCollection[3].text = "\(lastMortgage.monthlyPayment)"
         }
     }
-
+    
     @objc func handleTap(_ sender: UITapGestureRecognizer) {
         for txtField: UITextField in txtFieldCollection {
             txtField.resignFirstResponder()

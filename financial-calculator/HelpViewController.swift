@@ -8,13 +8,13 @@
 import UIKit
 
 class HelpViewController: UIViewController {
-
+    
     @IBOutlet weak var instructionsImgView: UIImageView!
     @IBOutlet weak var transparentView: UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
         
         self.transparentView.backgroundColor = UIColor(red: 0.33, green: 0.33, blue: 0.33, alpha: 0.5)
@@ -32,5 +32,5 @@ class HelpViewController: UIViewController {
     
     @objc func handleTap(_ sender: UITapGestureRecognizer) {
         self.dismiss(animated: true, completion: nil)
-      }
+    }
 }

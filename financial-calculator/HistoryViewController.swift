@@ -8,7 +8,7 @@
 import UIKit
 
 class HistoryViewController: UIViewController {
-
+    
     @IBOutlet weak var historyTableView: UITableView!
     
     override func viewDidLoad() {
@@ -72,7 +72,7 @@ extension HistoryViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         
         if editingStyle == .delete {
-
+            
             let removeIdx : Int = getSelectedIndexPathRowNumber(from: indexPath)
             
             // Removes the selected item
