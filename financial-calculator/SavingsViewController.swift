@@ -15,11 +15,11 @@ class SavingsViewController: UIViewController {
     
     @IBOutlet weak var paymentValueView: UIStackView!
     
-    var monthlyAmount: Float = 0.0
-    var interestRate: Float = 0.0
-    var numberOfYears: Float = 0.0
-    var amountSaved: Float = 0.0
-    var regularContribution: Float = 0.0
+    var monthlyAmount: Double = 0.0
+    var interestRate: Double = 0.0
+    var numberOfYears: Double = 0.0
+    var amountSaved: Double = 0.0
+    var regularContribution: Double = 0.0
     
     var saving : Saving = Saving()
     var prevSaving : Saving?
@@ -88,7 +88,7 @@ class SavingsViewController: UIViewController {
         
         saving = Saving(interestRate: self.interestRate, montlyPayment: self.monthlyAmount, numOfYears: self.numberOfYears, savedAmount: self.amountSaved, regularContributionValue: self.regularContribution)
         
-        let amountSavedTxt: Float = Formulae.calculateSavings(savingsDetail: saving)
+        let amountSavedTxt: Double = Formulae.calculateSavings(savingsDetail: saving)
         
         saving.savedAmount = amountSavedTxt
         txtFieldCollection[3].text = String(format: "%.2f", amountSavedTxt)
@@ -139,19 +139,19 @@ extension SavingsViewController: UITextFieldDelegate {
     func getTextFromTextField(_ textField: UITextField) {
         
         if textField == self.txtFieldCollection[0] {
-            self.monthlyAmount = Float(textField.text!) ?? 0.0
+            self.monthlyAmount = Double(textField.text!) ?? 0.0
         }
         else if textField == self.txtFieldCollection[1] {
-            self.interestRate = Float(textField.text!) ?? 0.0
+            self.interestRate = Double(textField.text!) ?? 0.0
         }
         else if textField == self.txtFieldCollection[2] {
-            self.numberOfYears = Float(textField.text!) ?? 0.0
+            self.numberOfYears = Double(textField.text!) ?? 0.0
         }
         else if textField == self.txtFieldCollection[3] {
-            self.amountSaved = Float(textField.text!) ?? 0.0
+            self.amountSaved = Double(textField.text!) ?? 0.0
         }
         else if textField == self.txtFieldCollection[4] {
-            self.regularContribution = Float(textField.text!) ?? 0.0
+            self.regularContribution = Double(textField.text!) ?? 0.0
         }
     }
 }

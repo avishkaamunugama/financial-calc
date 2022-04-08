@@ -9,17 +9,18 @@ import Foundation
 
 public struct Mortgage: Codable {
     
-    var loanAmount:Float = 0.0
-    var interestRate: Float = 0.0
-    var numOfYears: Float = 0.0
-    var monthlyPayment: Float = 0.0
+    var borrowingAmount:Double = 0.0
+    var interestRate: Double = 0.0
+    var monthlyPayment: Double = 0.0
+    var numOfPayments: Double = 0.0
+    var isShownInYears: Bool = false
 }
 
 public struct Saving: Codable {
     
-    var interestRate: Float = 0.0
-    var montlyPayment: Float = 0.0
-    var numOfYears: Float = 0.0
-    var savedAmount:Float = 0.0
-    var regularContributionValue:Float = 0.0
+    var interestRate: Double = 0.0
+    var montlyPayment: Double = 0.0
+    var numOfYears: Double = 0.0
+    var savedAmount:Double = 0.0
+    var regularContributionValue:Double = 0.0
 }
