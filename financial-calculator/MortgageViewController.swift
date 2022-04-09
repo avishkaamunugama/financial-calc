@@ -39,6 +39,23 @@ class MortgageViewController: UIViewController {
         configureTextFields()
     }
     
+    // fills up the text fields with previous calculation details
+    func loadPreviousCalculation() {
+        if prevMorgage == nil && mortgageList!.count > 0 {
+            prevMorgage = mortgageList?.last
+        }
+        
+        if let lastMortgage = prevMorgage {
+            txtFieldCollection[0].text = "\(lastMortgage.borrowingAmount)"
+            txtFieldCollection[1].text = "\(lastMortgage.interestRate)"
+            txtFieldCollection[2].text = "\(lastMortgage.monthlyPayment)"
+            txtFieldCollection[3].text = "\(lastMortgage.numOfPayments)"
+            
+            self.showInYears = lastMortgage.isShownInYears
+            showInYearsSwitch.setOn(lastMortgage.isShownInYears, animated: true)
+        }
+    }
+    
     // text field delegate and main view gesture configs
     func configureTextFields() {
         for txtField: UITextField in txtFieldCollection {
@@ -59,43 +76,16 @@ class MortgageViewController: UIViewController {
         }
     }
     
-    // fills up the text fields with previous calculation details
-    func loadPreviousCalculation() {
-        if prevMorgage == nil && mortgageList!.count > 0 {
-            prevMorgage = mortgageList?.last
-        }
-        
-        if let lastMortgage = prevMorgage {
-            txtFieldCollection[0].text = "\(lastMortgage.borrowingAmount)"
-            txtFieldCollection[1].text = "\(lastMortgage.interestRate)"
-            txtFieldCollection[2].text = "\(lastMortgage.monthlyPayment)"
-            txtFieldCollection[3].text = "\(lastMortgage.numOfPayments)"
-            showInYearsSwitch.setOn(lastMortgage.isShownInYears, animated: true)
-        }
-    }
-    
     // finds the empty field and calculate the value
     @IBAction func calculateMissingField(_ sender: Any) {
         
-        var emptyFieldCount: Int = 0
-
-        // Hide keyboard
-        for txtField: UITextField in txtFieldCollection {
-            txtField.resignFirstResponder()
-            
-            if txtField.text!.isEmpty {
-                emptyFieldCount += 1
-            }
-        }
-        
-        
-        if emptyFieldCount > 1 {
+        if emptyFieldCount() > 1 {
             displayAlert(withTitle: "Multiple Empty Fields Found!", withMessage: "Please ONLY leave the field that needs to be calculated blank for the calculations to proceed. Only 1 field can be calculated once.")
             return
         }
         
         if txtFieldCollection[0].text!.isEmpty {
-            self.borrowingAmount = Formulae.calculateBorrowingAmount(inYears: showInYears, mortgageDetail: mortgage!)
+            self.borrowingAmount = MortgageFormulae.calculateBorrowingAmount(inYears: showInYears, mortgageDetail: mortgage!)
             txtFieldCollection[0].text = "\(self.borrowingAmount)"
         }
         else if txtFieldCollection[1].text!.isEmpty {
@@ -103,12 +93,12 @@ class MortgageViewController: UIViewController {
             return
         }
         else if txtFieldCollection[2].text!.isEmpty {
-            self.monthlyPayment = Formulae.calculateMonthlyPayment(inYears: showInYears, mortgageDetail: mortgage!)
+            self.monthlyPayment = MortgageFormulae.calculateMonthlyPayment(inYears: showInYears, mortgageDetail: mortgage!)
             
             txtFieldCollection[2].text = "\(self.monthlyPayment)"
         }
         else if txtFieldCollection[3].text!.isEmpty {
-            self.numberOfPayments = Formulae.calculateNumberOfPayments(inYears: showInYears, mortgageDetail: mortgage!)
+            self.numberOfPayments = MortgageFormulae.calculateNumberOfPayments(inYears: showInYears, mortgageDetail: mortgage!)
             txtFieldCollection[3].text = "\(self.numberOfPayments)"
         }
         else {
@@ -117,6 +107,21 @@ class MortgageViewController: UIViewController {
         }
         
         updateCurrentModel()
+    }
+    
+    func emptyFieldCount()->Int {
+        var emptyFieldCount: Int = 0
+
+        // Hide keyboard
+        for txtField: UITextField in txtFieldCollection {
+            txtField.resignFirstResponder()
+            
+            if txtField.text!.isEmpty || Int(txtField.text!) == 0 {
+                emptyFieldCount += 1
+            }
+        }
+        
+        return emptyFieldCount
     }
     
     func displayAlert(withTitle title:String, withMessage message:String) {
@@ -169,7 +174,7 @@ class MortgageViewController: UIViewController {
     
     @IBAction func saveMortgage(_ sender: Any) {
         
-        if let mortgage = mortgage {
+        if let mortgage = self.mortgage, emptyFieldCount() < 4 {
             mortgageList?.append(mortgage)
             clearAllFields()
         }
@@ -180,7 +185,6 @@ class MortgageViewController: UIViewController {
     }
     
     @IBAction func clearAllTextFields(_ sender: UIBarButtonItem) {
-        
         clearAllFields()
     }
     

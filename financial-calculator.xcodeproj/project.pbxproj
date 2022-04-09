@@ -10,6 +10,8 @@
 		EF2B122B27FEB3FD00372A6B /* HelpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2B122A27FEB3FC00372A6B /* HelpViewController.swift */; };
 		EF2B122D27FED99100372A6B /* HistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2B122C27FED99100372A6B /* HistoryViewController.swift */; };
 		EF2B122F27FEEEE900372A6B /* HelperFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2B122E27FEEEE900372A6B /* HelperFunctions.swift */; };
+		EF2B12312800AA8300372A6B /* SimpleSavingsFormulae.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2B12302800AA8300372A6B /* SimpleSavingsFormulae.swift */; };
+		EF2B123328019BC000372A6B /* CompundSavingsFormulae.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2B123228019BC000372A6B /* CompundSavingsFormulae.swift */; };
 		EF4BB27D27FDE25F004ED89E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4BB27C27FDE25F004ED89E /* AppDelegate.swift */; };
 		EF4BB27F27FDE25F004ED89E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4BB27E27FDE25F004ED89E /* SceneDelegate.swift */; };
 		EF4BB28127FDE25F004ED89E /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4BB28027FDE25F004ED89E /* HomeViewController.swift */; };
@@ -18,7 +20,7 @@
 		EF4BB28927FDE260004ED89E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EF4BB28727FDE260004ED89E /* LaunchScreen.storyboard */; };
 		EF4BB29127FDE9F4004ED89E /* MortgageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4BB29027FDE9F4004ED89E /* MortgageViewController.swift */; };
 		EF4BB29327FDEA18004ED89E /* SavingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4BB29227FDEA18004ED89E /* SavingsViewController.swift */; };
-		EF4BB29827FE9365004ED89E /* Formulae.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4BB29627FE9365004ED89E /* Formulae.swift */; };
+		EF4BB29827FE9365004ED89E /* MortgageFormulae.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4BB29627FE9365004ED89E /* MortgageFormulae.swift */; };
 		EF4BB29927FE9365004ED89E /* AppStructures.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4BB29727FE9365004ED89E /* AppStructures.swift */; };
 /* End PBXBuildFile section */
 
@@ -26,6 +28,8 @@
 		EF2B122A27FEB3FC00372A6B /* HelpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpViewController.swift; sourceTree = "<group>"; };
 		EF2B122C27FED99100372A6B /* HistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryViewController.swift; sourceTree = "<group>"; };
 		EF2B122E27FEEEE900372A6B /* HelperFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelperFunctions.swift; sourceTree = "<group>"; };
+		EF2B12302800AA8300372A6B /* SimpleSavingsFormulae.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleSavingsFormulae.swift; sourceTree = "<group>"; };
+		EF2B123228019BC000372A6B /* CompundSavingsFormulae.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompundSavingsFormulae.swift; sourceTree = "<group>"; };
 		EF4BB27927FDE25F004ED89E /* financial-calculator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "financial-calculator.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF4BB27C27FDE25F004ED89E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EF4BB27E27FDE25F004ED89E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -36,7 +40,7 @@
 		EF4BB28A27FDE260004ED89E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EF4BB29027FDE9F4004ED89E /* MortgageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MortgageViewController.swift; sourceTree = "<group>"; };
 		EF4BB29227FDEA18004ED89E /* SavingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavingsViewController.swift; sourceTree = "<group>"; };
-		EF4BB29627FE9365004ED89E /* Formulae.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Formulae.swift; sourceTree = "<group>"; };
+		EF4BB29627FE9365004ED89E /* MortgageFormulae.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MortgageFormulae.swift; sourceTree = "<group>"; };
 		EF4BB29727FE9365004ED89E /* AppStructures.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppStructures.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -78,7 +82,9 @@
 				EF2B122A27FEB3FC00372A6B /* HelpViewController.swift */,
 				EF2B122C27FED99100372A6B /* HistoryViewController.swift */,
 				EF4BB29727FE9365004ED89E /* AppStructures.swift */,
-				EF4BB29627FE9365004ED89E /* Formulae.swift */,
+				EF4BB29627FE9365004ED89E /* MortgageFormulae.swift */,
+				EF2B12302800AA8300372A6B /* SimpleSavingsFormulae.swift */,
+				EF2B123228019BC000372A6B /* CompundSavingsFormulae.swift */,
 				EF2B122E27FEEEE900372A6B /* HelperFunctions.swift */,
 				EF4BB28227FDE25F004ED89E /* Main.storyboard */,
 				EF4BB28527FDE260004ED89E /* Assets.xcassets */,
@@ -163,12 +169,14 @@
 				EF4BB29327FDEA18004ED89E /* SavingsViewController.swift in Sources */,
 				EF4BB28127FDE25F004ED89E /* HomeViewController.swift in Sources */,
 				EF2B122B27FEB3FD00372A6B /* HelpViewController.swift in Sources */,
+				EF2B12312800AA8300372A6B /* SimpleSavingsFormulae.swift in Sources */,
 				EF4BB27D27FDE25F004ED89E /* AppDelegate.swift in Sources */,
 				EF2B122F27FEEEE900372A6B /* HelperFunctions.swift in Sources */,
-				EF4BB29827FE9365004ED89E /* Formulae.swift in Sources */,
+				EF4BB29827FE9365004ED89E /* MortgageFormulae.swift in Sources */,
 				EF2B122D27FED99100372A6B /* HistoryViewController.swift in Sources */,
 				EF4BB29927FE9365004ED89E /* AppStructures.swift in Sources */,
 				EF4BB27F27FDE25F004ED89E /* SceneDelegate.swift in Sources */,
+				EF2B123328019BC000372A6B /* CompundSavingsFormulae.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

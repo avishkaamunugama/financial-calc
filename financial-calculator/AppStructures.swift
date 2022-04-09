@@ -18,9 +18,11 @@ public struct Mortgage: Codable {
 
 public struct Saving: Codable {
     
+    var principleAmount: Double = 0.0
     var interestRate: Double = 0.0
-    var montlyPayment: Double = 0.0
-    var numOfYears: Double = 0.0
-    var savedAmount:Double = 0.0
-    var regularContributionValue:Double = 0.0
+    var monthlyPayment: Double = 0.0
+    var futureValue:Double = 0.0
+    var numberOfPayments:Double = 0.0
+    var isCompoundSaving: Bool = false
+    var isShownInYears: Bool = false
 }

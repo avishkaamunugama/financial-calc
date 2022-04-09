@@ -40,19 +40,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Called as the scene transitions from the background to the foreground.
         // Use this method to undo the changes made on entering the background.
         
-        if let mortgages = fetchMortgage() {
-            mortgageList = mortgages
-        }
-        else {
-            mortgageList = [Mortgage]()
-        }
-        
-        if let savings = fetchSavings() {
-            savingsList = savings
-        }
-        else {
-            savingsList = [Saving]()
-        }
+        mortgageList = fetchMortgage() ?? [Mortgage]()
+        savingsList = fetchSavings() ?? [Saving]()
     }
     
     func sceneDidEnterBackground(_ scene: UIScene) {
