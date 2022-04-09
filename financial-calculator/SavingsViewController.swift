@@ -38,38 +38,53 @@ class SavingsViewController: UIViewController {
         super.viewDidLoad()
         
         loadPreviousCalculation()
-        configureTextFields()
+        populateFields()
+        configureGestures()
     }
     
-    func loadPreviousCalculation() {
+    override func viewWillAppear(_ animated: Bool) {
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
+    }
+    
+    func loadPreviousCalculation(){
+        var lastSaving:Saving? = Saving()
         
-        if prevSaving == nil && savingsList!.count > 0 {
-            prevSaving = savingsList?.last
+        if savingsList!.count > 0 {
+
+            for i in 1...savingsList!.count {
+
+                if let previous = savingsList?[savingsList!.count - i], previous.isCompoundSaving == self.isCompoundSaving {
+                    lastSaving = savingsList?[savingsList!.count - i]
+                    break
+                }
+            }
         }
         
+        prevSaving = lastSaving
+    }
+    
+    func populateFields() {
         if let lastSaving = prevSaving {
-            txtFieldCollection[0].text = "\(lastSaving.principleAmount)"
-            txtFieldCollection[1].text = "\(lastSaving.interestRate)"
-            txtFieldCollection[2].text = "\(lastSaving.monthlyPayment)"
-            txtFieldCollection[3].text = "\(lastSaving.futureValue)"
-            txtFieldCollection[4].text = "\(lastSaving.numberOfPayments)"
+            txtFieldCollection[0].text = lastSaving.principleAmount > 0 ? "\(lastSaving.principleAmount)" : ""
+            txtFieldCollection[1].text = lastSaving.interestRate > 0 ? "\(lastSaving.interestRate)" : ""
+            txtFieldCollection[2].text = lastSaving.monthlyPayment > 0 ? "\(lastSaving.monthlyPayment)" : ""
+            txtFieldCollection[3].text = lastSaving.futureValue > 0 ? "\(lastSaving.futureValue)" : ""
+            txtFieldCollection[4].text = lastSaving.numberOfPayments > 0 ? "\(lastSaving.numberOfPayments)" : ""
             
             self.showInYears = lastSaving.isShownInYears
-            self.isCompoundSaving = lastSaving.isCompoundSaving
             showInYearsSwitch.setOn(self.showInYears, animated: true)
-            
-            segmentedControl.selectedSegmentIndex = lastSaving.isCompoundSaving ? 1 : 0
-            monthlyPaymentView.isHidden = !lastSaving.isCompoundSaving
+            segmentedControl.selectedSegmentIndex = self.isCompoundSaving ? 1 : 0
+            monthlyPaymentView.isHidden = !self.isCompoundSaving
         }
-    }
-    
-    func configureTextFields() {
+        
         for txtField: UITextField in txtFieldCollection {
-            
             txtField.delegate = self
             getTextFromTextField(txtField)
         }
-        
+    }
+    
+    func configureGestures() {
+
         let tap = UITapGestureRecognizer(target: self, action: #selector(self.handleTap(_:)))
         self.view.addGestureRecognizer(tap)
         self.view.isUserInteractionEnabled = true
@@ -93,6 +108,9 @@ class SavingsViewController: UIViewController {
         default:
             break
         }
+        
+        loadPreviousCalculation()
+        populateFields()
     }
     
     @IBAction func calculateMissingFields(_ sender: Any) {

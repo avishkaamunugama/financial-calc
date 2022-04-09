@@ -14,6 +14,37 @@ class HomeViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        self.navigationController?.setNavigationBarHidden(true, animated: true)
+    }
+    
+    @IBAction func viewHelpScreen(_ sender: UIButton) {
+        
+        
+    }
+    
+    @IBAction func navigateToSimpleSavingsScreen(_ sender: UIButton) {
+        
+        let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        if let destVC = storyBoard.instantiateViewController(withIdentifier: "savingsView") as? SavingsViewController {
+            
+            destVC.isCompoundSaving = false
+
+            self.navigationController!.pushViewController(destVC, animated: true)
+        }
+        
+    }
+    @IBAction func navigateToCompoundSavingsScreen(_ sender: UIButton) {
+        
+        let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        if let destVC = storyBoard.instantiateViewController(withIdentifier: "savingsView") as? SavingsViewController {
+            
+            destVC.isCompoundSaving = true
+
+            self.navigationController!.pushViewController(destVC, animated: true)
+        }
+        
+    }
     
 }
 

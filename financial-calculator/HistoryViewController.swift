@@ -19,6 +19,8 @@ class HistoryViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
+        
         updateCalcHistory()
         historyTableView.reloadData()
     }
@@ -100,7 +102,18 @@ extension HistoryViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func navigateToSavingsScreen(from indexPath:IndexPath) {
-        print("not yet done")
+        let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        if let destVC = storyBoard.instantiateViewController(withIdentifier: "savingsView") as? SavingsViewController {
+            
+            if let savings = savingsList {
+                
+                let selectedIdx: Int = getSelectedIndexPathRowNumber(from: indexPath)
+                destVC.prevSaving = savings[selectedIdx]
+                destVC.isCompoundSaving = savings[selectedIdx].isCompoundSaving
+            }
+            
+            self.navigationController!.pushViewController(destVC, animated: true)
+        }
     }
     
     func navigateToMortgageScreen(from indexPath:IndexPath) {

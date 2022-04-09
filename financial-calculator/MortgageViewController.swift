@@ -39,6 +39,10 @@ class MortgageViewController: UIViewController {
         configureTextFields()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
+    }
+    
     // fills up the text fields with previous calculation details
     func loadPreviousCalculation() {
         if prevMorgage == nil && mortgageList!.count > 0 {
