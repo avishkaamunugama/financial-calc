@@ -11,7 +11,7 @@ class SimpleSavingsFormulae {
     
     static func calculateSimpleFutureValue(inYears isYears:Bool, savingsDetail:Saving)-> Double {
         let P:Double = savingsDetail.principleAmount
-        let r:Double = savingsDetail.interestRate
+        let r:Double = savingsDetail.interestRate / 100
         let n: Double = 12
         let t: Double = isYears ? savingsDetail.numberOfPayments : savingsDetail.numberOfPayments/12
 
@@ -23,7 +23,7 @@ class SimpleSavingsFormulae {
     
     static func calculateSimplePrincipleAmount(inYears isYears:Bool, savingsDetail:Saving)-> Double {
         let A:Double = savingsDetail.futureValue
-        let r:Double = savingsDetail.interestRate
+        let r:Double = savingsDetail.interestRate / 100
         let n: Double = 12
         let t: Double = isYears ? savingsDetail.numberOfPayments : savingsDetail.numberOfPayments/12
 
@@ -50,7 +50,7 @@ class SimpleSavingsFormulae {
         let A:Double = savingsDetail.futureValue
         let P:Double = savingsDetail.principleAmount
         let n: Double = 12
-        let r:Double = savingsDetail.interestRate
+        let r:Double = savingsDetail.interestRate / 100
 
         let f1: Double = log(A/P)
         let f2: Double = n*log(1+(r/n))

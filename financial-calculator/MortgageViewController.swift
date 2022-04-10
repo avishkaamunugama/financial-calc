@@ -50,10 +50,10 @@ class MortgageViewController: UIViewController {
         }
         
         if let lastMortgage = prevMorgage {
-            txtFieldCollection[0].text = "\(lastMortgage.borrowingAmount)"
-            txtFieldCollection[1].text = "\(lastMortgage.interestRate)"
-            txtFieldCollection[2].text = "\(lastMortgage.monthlyPayment)"
-            txtFieldCollection[3].text = "\(lastMortgage.numOfPayments)"
+            txtFieldCollection[0].text = round(number: lastMortgage.borrowingAmount, to: 2)
+            txtFieldCollection[1].text = round(number: lastMortgage.interestRate, to: 2)
+            txtFieldCollection[2].text = round(number: lastMortgage.monthlyPayment, to: 2)
+            txtFieldCollection[3].text = round(number: lastMortgage.numOfPayments, to: 2)
             
             self.showInYears = lastMortgage.isShownInYears
             showInYearsSwitch.setOn(lastMortgage.isShownInYears, animated: true)
@@ -90,7 +90,7 @@ class MortgageViewController: UIViewController {
         
         if txtFieldCollection[0].text!.isEmpty {
             self.borrowingAmount = MortgageFormulae.calculateBorrowingAmount(inYears: showInYears, mortgageDetail: mortgage!)
-            txtFieldCollection[0].text = "\(self.borrowingAmount)"
+            txtFieldCollection[0].text = round(number: self.borrowingAmount, to: 2)
         }
         else if txtFieldCollection[1].text!.isEmpty {
             displayAlert(withTitle: "Invalid Interest Rate!", withMessage: "To proceed with the calculations please enter a valid interest rate (%).")
@@ -99,11 +99,11 @@ class MortgageViewController: UIViewController {
         else if txtFieldCollection[2].text!.isEmpty {
             self.monthlyPayment = MortgageFormulae.calculateMonthlyPayment(inYears: showInYears, mortgageDetail: mortgage!)
             
-            txtFieldCollection[2].text = "\(self.monthlyPayment)"
+            txtFieldCollection[2].text = round(number: self.monthlyPayment, to: 2)
         }
         else if txtFieldCollection[3].text!.isEmpty {
             self.numberOfPayments = MortgageFormulae.calculateNumberOfPayments(inYears: showInYears, mortgageDetail: mortgage!)
-            txtFieldCollection[3].text = "\(self.numberOfPayments)"
+            txtFieldCollection[3].text = round(number: self.numberOfPayments, to: 2)
         }
         else {
             displayAlert(withTitle: "No Empty Fields Found!", withMessage: "Please leave the field that needs to be calculated blank for the calculations to proceed.")
@@ -160,7 +160,7 @@ class MortgageViewController: UIViewController {
     func changeToYears() {
         if let txt = self.txtFieldCollection[3].text, !txt.isEmpty {
             let numMonths = Double(txt) ?? 0.0
-            self.txtFieldCollection[3].text = "\(numMonths/12)"
+            self.txtFieldCollection[3].text = round(number: numMonths/12, to: 2)
             self.numberOfPayments = numMonths/12
             updateCurrentModel()
         }
@@ -169,7 +169,7 @@ class MortgageViewController: UIViewController {
     func changeToMonths() {
         if let txt = self.txtFieldCollection[3].text, !txt.isEmpty {
             let numYears = Double(txt) ?? 0.0
-            self.txtFieldCollection[3].text = "\(numYears*12)"
+            self.txtFieldCollection[3].text = round(number: numYears*12, to: 2)
             self.numberOfPayments = numYears*12
             updateCurrentModel()
         }

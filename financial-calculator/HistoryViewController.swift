@@ -27,11 +27,19 @@ class HistoryViewController: UIViewController {
     
     @IBAction func clearHistory(_ sender: UIBarButtonItem) {
         
-        mortgageList?.removeAll()
-        savingsList?.removeAll()
-        
-        updateCalcHistory()
-        historyTableView.reloadData()
+        let refreshAlert = UIAlertController(title: "Delete All!", message: "All saved calculations will be permanently removed from history.", preferredStyle: .alert)
+
+        refreshAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (action: UIAlertAction!) in
+            mortgageList?.removeAll()
+            savingsList?.removeAll()
+            
+            updateCalcHistory()
+            self.historyTableView.reloadData()
+        }))
+
+        refreshAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+
+        self.present(refreshAlert, animated: true, completion: nil)
     }
     
     @IBAction func viewHelpScreen(_ sender: UIBarButtonItem) {
@@ -65,10 +73,70 @@ extension HistoryViewController: UITableViewDelegate, UITableViewDataSource {
         cell.textLabel?.numberOfLines = 0
         
         if let pastCalcs = pastCalculations {
-            cell.textLabel?.text = "\(pastCalcs[indexPath.row])"
+            
+            let arrangedTxt = arrangeTextForPreview(pastCalcs[indexPath.row])
+            let txtAttribute = [NSAttributedString.Key.font:UIFont.systemFont(ofSize: 16.0, weight: .medium)]
+            let attrarrangedTxt = NSAttributedString(string: arrangedTxt, attributes: txtAttribute)
+            
+            cell.textLabel?.attributedText = attrarrangedTxt
         }
         
         return cell
+    }
+    
+    func arrangeTextForPreview(_ calc:Any) ->String {
+
+        if type(of: calc) == type(of: Saving()) {
+            return savingsPreview(calc)
+
+        }
+        else if type(of: calc) == type(of: Mortgage()) {
+           return mortgagePreview(calc)
+        }
+        
+        return "Unknown Object Type"
+    }
+    
+    func savingsPreview(_ calc:Any) -> String {
+        let sCalc:Saving? = calc as? Saving
+        var sYearStr:String = "Years"
+        if !(sCalc!.isShownInYears) {
+            sYearStr = "Months"
+        }
+        
+        if sCalc!.isCompoundSaving {
+            return """
+            Compund Savings:
+            \t- Principle Amount: $\(round(number: sCalc!.principleAmount, to: 2))
+            \t- Interest Rate: \(round(number: sCalc!.interestRate, to: 2))%
+            \t- Monthly Payment: $\(round(number: sCalc!.monthlyPayment, to: 2))
+            \t- Number of Payments: \(round(number: sCalc!.numberOfPayments, to: 2)) \(sYearStr)
+            """
+        }
+        else {
+            return """
+            Simple Savings:
+            \t- Principle Amount: $\(round(number: sCalc!.principleAmount, to: 2))
+            \t- Interest Rate: \(round(number: sCalc!.interestRate, to: 2))%
+            \t- Number of Payments: \(round(number: sCalc!.numberOfPayments, to: 2)) \(sYearStr)
+            """
+        }
+    }
+    
+    func mortgagePreview(_ calc:Any) -> String {
+        let mCalc:Mortgage? = calc as? Mortgage
+        var mYearStr:String = "Years"
+        if !(mCalc!.isShownInYears) {
+            mYearStr = "Months"
+        }
+        
+        return """
+        Loans & Mortgages:
+        \t- Borrowing Amount: $\(round(number: mCalc!.borrowingAmount, to: 2))
+        \t- Interest Rate: \(round(number: mCalc!.interestRate, to: 2))%
+        \t- Monthly Payment: $\(round(number: mCalc!.monthlyPayment, to: 2))
+        \t- Number of Payments: \(round(number: mCalc!.numOfPayments, to: 2)) \(mYearStr)
+        """
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {

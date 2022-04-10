@@ -29,6 +29,7 @@ class HomeViewController: UIViewController {
         if let destVC = storyBoard.instantiateViewController(withIdentifier: "savingsView") as? SavingsViewController {
             
             destVC.isCompoundSaving = false
+            destVC.navigationTitle = "Simple Savings"
 
             self.navigationController!.pushViewController(destVC, animated: true)
         }
@@ -40,6 +41,7 @@ class HomeViewController: UIViewController {
         if let destVC = storyBoard.instantiateViewController(withIdentifier: "savingsView") as? SavingsViewController {
             
             destVC.isCompoundSaving = true
+            destVC.navigationTitle = "Compound Savings"
 
             self.navigationController!.pushViewController(destVC, animated: true)
         }

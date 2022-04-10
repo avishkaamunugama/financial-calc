@@ -65,3 +65,8 @@ func fetchSavings() -> [Saving]? {
 func updateCalcHistory() {
     pastCalculations = (mortgageList! + savingsList!)
 }
+
+func round(number num:Double, to dp:Int) -> String {
+    return String(format: "%.\(dp)f", num)
+}
+

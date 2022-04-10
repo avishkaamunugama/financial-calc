@@ -30,6 +30,7 @@ class SavingsViewController: UIViewController {
     var numberOfPayments: Double = 0.0
     var isCompoundSaving: Bool = false
     var showInYears: Bool = false
+    var navigationTitle: String = "Savings"
     
     var saving : Saving?
     var prevSaving : Saving?
@@ -37,19 +38,24 @@ class SavingsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let titleTextAttributes = [NSAttributedString.Key.foregroundColor:UIColor.white, NSAttributedString.Key.font:UIFont.systemFont(ofSize: 14.0, weight: .bold)]
+        self.segmentedControl.setTitleTextAttributes(titleTextAttributes, for: .selected)
+        
         loadPreviousCalculation()
         populateFields()
         configureGestures()
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        self.title = navigationTitle
         self.navigationController?.setNavigationBarHidden(false, animated: true)
     }
     
     func loadPreviousCalculation(){
-        var lastSaving:Saving? = Saving()
         
         if savingsList!.count > 0 {
+            
+            var lastSaving:Saving? = Saving()
 
             for i in 1...savingsList!.count {
 
@@ -58,24 +64,25 @@ class SavingsViewController: UIViewController {
                     break
                 }
             }
+            
+            prevSaving = lastSaving
         }
-        
-        prevSaving = lastSaving
     }
     
     func populateFields() {
         if let lastSaving = prevSaving {
-            txtFieldCollection[0].text = lastSaving.principleAmount > 0 ? "\(lastSaving.principleAmount)" : ""
-            txtFieldCollection[1].text = lastSaving.interestRate > 0 ? "\(lastSaving.interestRate)" : ""
-            txtFieldCollection[2].text = lastSaving.monthlyPayment > 0 ? "\(lastSaving.monthlyPayment)" : ""
-            txtFieldCollection[3].text = lastSaving.futureValue > 0 ? "\(lastSaving.futureValue)" : ""
-            txtFieldCollection[4].text = lastSaving.numberOfPayments > 0 ? "\(lastSaving.numberOfPayments)" : ""
+            txtFieldCollection[0].text = round(number: lastSaving.principleAmount, to: 2)
+            txtFieldCollection[1].text = round(number: lastSaving.interestRate, to: 2)
+            txtFieldCollection[2].text = round(number: lastSaving.monthlyPayment, to: 2)
+            txtFieldCollection[3].text = round(number: lastSaving.futureValue, to: 2)
+            txtFieldCollection[4].text = round(number: lastSaving.numberOfPayments, to: 2)
             
             self.showInYears = lastSaving.isShownInYears
-            showInYearsSwitch.setOn(self.showInYears, animated: true)
-            segmentedControl.selectedSegmentIndex = self.isCompoundSaving ? 1 : 0
-            monthlyPaymentView.isHidden = !self.isCompoundSaving
         }
+        
+        showInYearsSwitch.setOn(self.showInYears, animated: true)
+        segmentedControl.selectedSegmentIndex = self.isCompoundSaving ? 1 : 0
+        monthlyPaymentView.isHidden = !self.isCompoundSaving
         
         for txtField: UITextField in txtFieldCollection {
             txtField.delegate = self
@@ -134,7 +141,7 @@ class SavingsViewController: UIViewController {
 
         if txtFieldCollection[0].text!.isEmpty {
             self.principleAmount = CompundSavingsFormulae.calculateCompundPrincipleAmount(inYears: showInYears, savingsDetail: saving!)
-            txtFieldCollection[0].text = "\(self.principleAmount)"
+            txtFieldCollection[0].text = round(number: self.principleAmount, to: 2)
         }
         else if txtFieldCollection[1].text!.isEmpty {
             displayAlert(withTitle: "Invalid Interest Rate!", withMessage: "To proceed with the calculations please enter a valid interest rate (%).")
@@ -142,15 +149,15 @@ class SavingsViewController: UIViewController {
         }
         else if txtFieldCollection[2].text!.isEmpty {
             self.monthlyPayment = CompundSavingsFormulae.calculateCompundMonthlyPayment(inYears: showInYears, savingsDetail: saving!)
-            txtFieldCollection[2].text = "\(self.monthlyPayment)"
+            txtFieldCollection[2].text = round(number: self.monthlyPayment, to: 2)
         }
         else if txtFieldCollection[3].text!.isEmpty {
             self.futureValue = CompundSavingsFormulae.calculateCompundFutureValue(inYears: showInYears, savingsDetail: saving!)
-            txtFieldCollection[3].text = "\(self.futureValue)"
+            txtFieldCollection[3].text = round(number: self.futureValue, to: 2)
         }
         else if txtFieldCollection[4].text!.isEmpty {
             self.numberOfPayments = CompundSavingsFormulae.calculateCompoundNumberOfPayments(inYears: showInYears, savingsDetail: saving!)
-            txtFieldCollection[4].text = "\(self.numberOfPayments)"
+            txtFieldCollection[4].text = round(number: self.numberOfPayments, to: 2)
         }
         else {
             displayAlert(withTitle: "No Empty Fields Found!", withMessage: "Please leave the field that needs to be calculated blank for the calculations to proceed.")
@@ -162,19 +169,19 @@ class SavingsViewController: UIViewController {
 
         if txtFieldCollection[0].text!.isEmpty {
             self.principleAmount = SimpleSavingsFormulae.calculateSimplePrincipleAmount(inYears: showInYears, savingsDetail: saving!)
-            txtFieldCollection[0].text = "\(self.principleAmount)"
+            txtFieldCollection[0].text = round(number: self.principleAmount, to: 2)
         }
         else if txtFieldCollection[1].text!.isEmpty {
             self.interestRate = SimpleSavingsFormulae.calculateSimpleInterestRate(inYears: showInYears, savingsDetail: saving!)
-            txtFieldCollection[1].text = "\(self.interestRate)"
+            txtFieldCollection[1].text = round(number: self.interestRate, to: 2)
         }
         else if txtFieldCollection[3].text!.isEmpty {
             self.futureValue = SimpleSavingsFormulae.calculateSimpleFutureValue(inYears: showInYears, savingsDetail: saving!)
-            txtFieldCollection[3].text = "\(self.futureValue)"
+            txtFieldCollection[3].text = round(number: self.futureValue, to: 2)
         }
         else if txtFieldCollection[4].text!.isEmpty {
             self.numberOfPayments = SimpleSavingsFormulae.calculateSimpleNumberOfPayments(inYears: showInYears, savingsDetail: saving!)
-            txtFieldCollection[4].text = "\(self.numberOfPayments)"
+            txtFieldCollection[4].text = round(number: self.numberOfPayments, to: 2)
         }
         else {
             displayAlert(withTitle: "No Empty Fields Found!", withMessage: "Please leave the field that needs to be calculated blank for the calculations to proceed.")
@@ -234,7 +241,7 @@ class SavingsViewController: UIViewController {
     func changeToYears() {
         if let txt = self.txtFieldCollection[4].text, !txt.isEmpty {
             let numMonths = Double(txt) ?? 0.0
-            self.txtFieldCollection[4].text = "\(numMonths/12)"
+            self.txtFieldCollection[4].text = round(number: numMonths/12, to: 2)
             self.numberOfPayments = numMonths/12
             updateSavingsModel()
         }
@@ -243,7 +250,7 @@ class SavingsViewController: UIViewController {
     func changeToMonths() {
         if let txt = self.txtFieldCollection[4].text, !txt.isEmpty {
             let numYears = Double(txt) ?? 0.0
-            self.txtFieldCollection[4].text = "\(numYears*12)"
+            self.txtFieldCollection[4].text = round(number: numYears*12, to: 2)
             self.numberOfPayments = numYears*12
             updateSavingsModel()
         }
