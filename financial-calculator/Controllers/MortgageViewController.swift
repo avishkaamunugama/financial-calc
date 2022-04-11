@@ -225,6 +225,9 @@ class MortgageViewController: UIViewController {
         let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         if let destVC = storyBoard.instantiateViewController(withIdentifier: "InstructionsHelpView") as? InstructionsHelpViewController {
             
+            destVC.instructionsImg = "sc_mortage"
+            destVC.instructionsTxt = mortgageViewHelpInstructions()
+            
             destVC.modalTransitionStyle = .crossDissolve
             self.navigationController?.present(destVC, animated: true)
         }

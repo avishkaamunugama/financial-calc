@@ -296,6 +296,15 @@ class SavingsViewController: UIViewController {
         let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         if let destVC = storyBoard.instantiateViewController(withIdentifier: "InstructionsHelpView") as? InstructionsHelpViewController {
             
+            if self.isCompoundSaving {
+                destVC.instructionsImg = "sc_compound"
+                destVC.instructionsTxt = compundSavingsViewHelpInstructions()
+            }
+            else {
+                destVC.instructionsImg = "sc_simple"
+                destVC.instructionsTxt = simpleSavingsViewHelpInstructions()
+            }
+            
             destVC.modalTransitionStyle = .crossDissolve
             self.navigationController?.present(destVC, animated: true)
         }

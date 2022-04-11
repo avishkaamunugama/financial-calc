@@ -58,6 +58,9 @@ class HistoryViewController: UIViewController {
         let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         if let destVC = storyBoard.instantiateViewController(withIdentifier: "InstructionsHelpView") as? InstructionsHelpViewController {
             
+            destVC.instructionsImg = "sc_history"
+            destVC.instructionsTxt = historyViewHelpInstructions()
+            
             destVC.modalTransitionStyle = .crossDissolve
             self.navigationController?.present(destVC, animated: true)
         }

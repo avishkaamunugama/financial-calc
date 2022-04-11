@@ -32,7 +32,7 @@ class HelpViewController: UIViewController {
             bgView.layer.masksToBounds=true
             bgView.layer.cornerRadius = 10
             bgView.layer.borderWidth = 1.5
-            bgView.layer.borderColor = UIColor.lightGray.cgColor
+            bgView.layer.borderColor = UIColor(red: 0.50, green: 0.50, blue: 0.50, alpha: 1.00).cgColor
             bgView.backgroundColor = UIColor.systemBackground
         }
     }

@@ -405,7 +405,7 @@
                                                                     <backgroundConfiguration key="background"/>
                                                                 </buttonConfiguration>
                                                                 <connections>
-                                                                    <segue destination="YTi-zL-ECJ" kind="show" id="bwc-4n-P7D"/>
+                                                                    <segue destination="YTi-zL-ECJ" kind="show" identifier="" id="bwc-4n-P7D"/>
                                                                 </connections>
                                                             </button>
                                                         </subviews>
@@ -1229,7 +1229,7 @@
         <!--Help Tab Bar View Controller-->
         <scene sceneID="cUb-48-I0e">
             <objects>
-                <tabBarController title="Help Tab Bar View Controller" automaticallyAdjustsScrollViewInsets="NO" id="YTi-zL-ECJ" customClass="HelpTabBarViewController" customModule="financial_calculator" customModuleProvider="target" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="helpTabBarView" title="Help Tab Bar View Controller" automaticallyAdjustsScrollViewInsets="NO" id="YTi-zL-ECJ" customClass="HelpTabBarViewController" customModule="financial_calculator" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="Help" largeTitleDisplayMode="always" id="dS8-3w-s9Q">
                         <barButtonItem key="leftBarButtonItem" image="icon_back" id="t09-on-6o1">
@@ -1286,7 +1286,7 @@
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
-                                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="img-help-symbol" translatesAutoresizingMaskIntoConstraints="NO" id="H4r-Y9-dyJ">
+                                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="img_help_symbol" translatesAutoresizingMaskIntoConstraints="NO" id="H4r-Y9-dyJ">
                                                                 <rect key="frame" x="8" y="97.5" width="368" height="100"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="100" id="6or-bs-x0s"/>
@@ -1993,37 +1993,88 @@ t = the time the money is invested or borrowed in years</string>
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </view>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="jhS-cx-QXk">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            </imageView>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oOQ-8r-rax">
+                                <rect key="frame" x="49.5" y="134.5" width="315" height="627"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="7tH-MD-yyZ">
+                                        <rect key="frame" x="15" y="50" width="285" height="563.5"/>
+                                        <subviews>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="sc_mortage" translatesAutoresizingMaskIntoConstraints="NO" id="Tx0-ql-QUt">
+                                                <rect key="frame" x="0.0" y="0.0" width="285" height="300"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="300" id="JkK-HC-qKX"/>
+                                                </constraints>
+                                            </imageView>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8JF-ZA-ZlL">
+                                                <rect key="frame" x="0.0" y="320" width="285" height="243.5"/>
+                                                <string key="text">1 - Lorem Ipsum is simply.
+2 - dummy text of the printing and typesettin.
+3 - industry. Lorem Ipsum has been.
+4 - the industry's standard dummy text ever since
+ 5 - the 1500s, when an unknown printer took
+ 6 - a galley of type and scrambled it to make
+ 7 - a type specimen book. It has survived not only five </string>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2by-E4-KYE" userLabel="Close Pop Up Button">
+                                        <rect key="frame" x="268" y="28.5" width="35" height="35"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="35" id="PT2-4c-4zr"/>
+                                            <constraint firstAttribute="height" constant="35" id="VfZ-Le-0hq"/>
+                                        </constraints>
+                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                        <state key="normal" backgroundImage="icon_close"/>
+                                        <connections>
+                                            <action selector="dissmissPopUp:" destination="gDC-Ub-3db" eventType="touchUpInside" id="brm-4y-3k0"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" red="0.92143100499999997" green="0.92145264149999995" blue="0.92144101860000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstItem="2by-E4-KYE" firstAttribute="top" secondItem="h7g-sY-auc" secondAttribute="top" constant="12" id="7op-6I-alQ"/>
+                                    <constraint firstItem="7tH-MD-yyZ" firstAttribute="top" secondItem="oOQ-8r-rax" secondAttribute="top" constant="50" id="GcD-2a-7KZ"/>
+                                    <constraint firstAttribute="bottom" secondItem="7tH-MD-yyZ" secondAttribute="bottom" constant="30" id="IgO-cM-wMi"/>
+                                    <constraint firstItem="7tH-MD-yyZ" firstAttribute="width" secondItem="oOQ-8r-rax" secondAttribute="width" constant="-30" id="YbW-dR-Ldm"/>
+                                    <constraint firstItem="7tH-MD-yyZ" firstAttribute="leading" secondItem="oOQ-8r-rax" secondAttribute="leading" constant="15" id="dRn-y5-2u0"/>
+                                    <constraint firstItem="h7g-sY-auc" firstAttribute="trailing" secondItem="2by-E4-KYE" secondAttribute="trailing" constant="12" id="rGd-NG-pSB"/>
+                                    <constraint firstAttribute="trailing" secondItem="7tH-MD-yyZ" secondAttribute="trailing" constant="15" id="v8N-bG-Y4n"/>
+                                </constraints>
+                                <viewLayoutGuide key="contentLayoutGuide" id="Coa-NM-FG8"/>
+                                <viewLayoutGuide key="frameLayoutGuide" id="h7g-sY-auc"/>
+                            </scrollView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="9Gx-0X-FKy"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="g2r-2C-Idb" secondAttribute="trailing" id="68h-HV-g4r"/>
                             <constraint firstItem="g2r-2C-Idb" firstAttribute="top" secondItem="KHY-b0-3dS" secondAttribute="top" id="9w0-XX-sBJ"/>
-                            <constraint firstItem="jhS-cx-QXk" firstAttribute="top" secondItem="KHY-b0-3dS" secondAttribute="top" id="FmV-ed-fbT"/>
-                            <constraint firstAttribute="trailing" secondItem="jhS-cx-QXk" secondAttribute="trailing" id="Fqe-dE-Ss7"/>
-                            <constraint firstItem="jhS-cx-QXk" firstAttribute="leading" secondItem="KHY-b0-3dS" secondAttribute="leading" id="JFN-d1-pb8"/>
-                            <constraint firstAttribute="trailing" secondItem="jhS-cx-QXk" secondAttribute="trailing" id="WTK-Mb-xeB"/>
-                            <constraint firstItem="jhS-cx-QXk" firstAttribute="top" secondItem="KHY-b0-3dS" secondAttribute="top" id="Yv7-CW-0JY"/>
-                            <constraint firstAttribute="bottom" secondItem="jhS-cx-QXk" secondAttribute="bottom" id="h99-d0-5nd"/>
+                            <constraint firstItem="oOQ-8r-rax" firstAttribute="height" secondItem="KHY-b0-3dS" secondAttribute="height" multiplier="0.7" id="DMK-XV-85L"/>
+                            <constraint firstItem="oOQ-8r-rax" firstAttribute="centerX" secondItem="KHY-b0-3dS" secondAttribute="centerX" id="GwP-Ct-CWT"/>
+                            <constraint firstItem="oOQ-8r-rax" firstAttribute="top" relation="greaterThanOrEqual" secondItem="KHY-b0-3dS" secondAttribute="top" constant="35" id="M5A-E3-tDD"/>
+                            <constraint firstItem="9Gx-0X-FKy" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="oOQ-8r-rax" secondAttribute="trailing" constant="35" id="Vd8-N3-jh8"/>
+                            <constraint firstItem="oOQ-8r-rax" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="9Gx-0X-FKy" secondAttribute="leading" constant="35" id="aVe-sA-4B6"/>
+                            <constraint firstItem="oOQ-8r-rax" firstAttribute="width" secondItem="KHY-b0-3dS" secondAttribute="width" multiplier="0.76" id="afQ-b3-8ZN"/>
+                            <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="oOQ-8r-rax" secondAttribute="bottom" constant="35" id="jb1-IY-h3e"/>
                             <constraint firstItem="g2r-2C-Idb" firstAttribute="leading" secondItem="KHY-b0-3dS" secondAttribute="leading" id="q4u-5l-pTU"/>
                             <constraint firstAttribute="bottom" secondItem="g2r-2C-Idb" secondAttribute="bottom" id="sIo-8V-1Xk"/>
-                            <constraint firstAttribute="bottom" secondItem="jhS-cx-QXk" secondAttribute="bottom" id="x5P-rp-60P"/>
-                            <constraint firstItem="jhS-cx-QXk" firstAttribute="leading" secondItem="KHY-b0-3dS" secondAttribute="leading" id="yRf-B6-Jtw"/>
+                            <constraint firstItem="oOQ-8r-rax" firstAttribute="centerY" secondItem="KHY-b0-3dS" secondAttribute="centerY" id="t3M-QE-8Fn"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="Y82-4B-12W"/>
                     <connections>
-                        <outlet property="instructionsImgView" destination="jhS-cx-QXk" id="Zxk-S7-rW0"/>
+                        <outlet property="instructionsScrollView" destination="oOQ-8r-rax" id="7g9-gT-4gb"/>
+                        <outlet property="instructionsViewImgView" destination="Tx0-ql-QUt" id="pD2-vH-3A1"/>
+                        <outlet property="intructionsViewTextLabel" destination="8JF-ZA-ZlL" id="jqU-pM-dvx"/>
                         <outlet property="transparentView" destination="g2r-2C-Idb" id="MsK-bR-cTK"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5DN-vR-KNu" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4652" y="-335"/>
+            <point key="canvasLocation" x="4650.7246376811599" y="-335.49107142857139"/>
         </scene>
     </scenes>
     <resources>
@@ -2035,12 +2086,12 @@ t = the time the money is invested or borrowed in years</string>
         <image name="icon_about" width="30" height="30"/>
         <image name="icon_back" width="24" height="24"/>
         <image name="icon_clear" width="30" height="30"/>
+        <image name="icon_close" width="24" height="24"/>
         <image name="icon_formulae" width="30" height="30"/>
         <image name="icon_help" width="30" height="30"/>
         <image name="icon_history" width="50" height="50"/>
         <image name="icon_remove" width="30" height="30"/>
         <image name="icon_save" width="50" height="50"/>
-        <image name="img-help-symbol" width="2092" height="676"/>
         <image name="img_f1" width="726" height="196"/>
         <image name="img_f10" width="1192" height="304"/>
         <image name="img_f11" width="480" height="226"/>
@@ -2052,6 +2103,8 @@ t = the time the money is invested or borrowed in years</string>
         <image name="img_f7" width="356" height="184"/>
         <image name="img_f8" width="976" height="288"/>
         <image name="img_f9" width="536" height="256"/>
+        <image name="img_help_symbol" width="2092" height="676"/>
+        <image name="sc_mortage" width="750" height="1153"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
