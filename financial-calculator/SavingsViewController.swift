@@ -85,6 +85,11 @@ class SavingsViewController: UIViewController {
         monthlyPaymentView.isHidden = !self.isCompoundSaving
         
         for txtField: UITextField in txtFieldCollection {
+            
+            if #available(iOS 13.0, *) {
+                txtField.overrideUserInterfaceStyle = .light
+            }
+            
             txtField.delegate = self
             getTextFromTextField(txtField)
         }
@@ -109,9 +114,11 @@ class SavingsViewController: UIViewController {
         case 0:
             self.isCompoundSaving = false
             monthlyPaymentView.isHidden = true
+            self.title = "Simple Savings"
         case 1:
             self.isCompoundSaving = true
             monthlyPaymentView.isHidden = false
+            self.title = "Compound Savings"
         default:
             break
         }
@@ -287,10 +294,30 @@ class SavingsViewController: UIViewController {
     @IBAction func viewHelpScreen(_ sender: UIBarButtonItem) {
         
         let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        if let destVC = storyBoard.instantiateViewController(withIdentifier: "helpView") as? HelpViewController {
+        if let destVC = storyBoard.instantiateViewController(withIdentifier: "InstructionsHelpView") as? InstructionsHelpViewController {
             
             destVC.modalTransitionStyle = .crossDissolve
             self.navigationController?.present(destVC, animated: true)
+        }
+    }
+    
+    @IBAction func popToRootView(_ sender: UIBarButtonItem) {
+        self.navigationController?.popToRootViewController(animated: true)
+    }
+    
+    @IBAction func viewSavingsCalculationHistory(_ sender: UIButton) {
+        
+        let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        if let destVC = storyBoard.instantiateViewController(withIdentifier: "historyView") as? HistoryViewController {
+            
+            if isCompoundSaving {
+                destVC.calcType = .compoundSaving
+            }
+            else{
+                destVC.calcType = .simpleSaving
+            }
+            
+            self.navigationController!.pushViewController(destVC, animated: true)
         }
     }
 }

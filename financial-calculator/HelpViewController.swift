@@ -9,28 +9,32 @@ import UIKit
 
 class HelpViewController: UIViewController {
     
-    @IBOutlet weak var instructionsImgView: UIImageView!
-    @IBOutlet weak var transparentView: UIView!
+    @IBOutlet var darkSectionBackgroundViews: [UIView]!
+    @IBOutlet var lightSectionBackgroundViews: [UIView]!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // Do any additional setup after loading the view.
-        
-        self.transparentView.backgroundColor = UIColor(red: 0.33, green: 0.33, blue: 0.33, alpha: 0.5)
-        self.instructionsImgView.image = UIImage(named: "img-help-mortgage")
-        
-        enableTapGesture()
+        applyTheme()
     }
     
-    func enableTapGesture() {
-        
-        let tap = UITapGestureRecognizer(target: self, action: #selector(self.handleTap(_:)))
-        self.view.addGestureRecognizer(tap)
-        self.view.isUserInteractionEnabled = true
+    override func viewWillAppear(_ animated: Bool) {
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
     }
     
-    @objc func handleTap(_ sender: UITapGestureRecognizer) {
-        self.dismiss(animated: true, completion: nil)
+    func applyTheme() {
+        for bgView in darkSectionBackgroundViews{
+            bgView.layer.masksToBounds=true
+            bgView.layer.cornerRadius = 10
+            bgView.backgroundColor = UIColor(red: 214.0, green: 214.0, blue: 214.0, alpha: 1.0)
+        }
+        
+        for bgView in lightSectionBackgroundViews{
+            bgView.layer.masksToBounds=true
+            bgView.layer.cornerRadius = 10
+            bgView.layer.borderWidth = 1.5
+            bgView.layer.borderColor = UIColor.lightGray.cgColor
+            bgView.backgroundColor = UIColor.systemBackground
+        }
     }
 }
+

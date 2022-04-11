@@ -11,6 +11,8 @@ class HistoryViewController: UIViewController {
     
     @IBOutlet weak var historyTableView: UITableView!
     
+    var calcType:CalculationType?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -21,7 +23,11 @@ class HistoryViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.setNavigationBarHidden(false, animated: true)
         
-        updateCalcHistory()
+        if self.calcType == nil {
+            self.calcType = .all
+        }
+        
+        updateCalcHistory(self.calcType!)
         historyTableView.reloadData()
     }
     
@@ -29,11 +35,11 @@ class HistoryViewController: UIViewController {
         
         let refreshAlert = UIAlertController(title: "Delete All!", message: "All saved calculations will be permanently removed from history.", preferredStyle: .alert)
 
-        refreshAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (action: UIAlertAction!) in
+        refreshAlert.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: { (action: UIAlertAction!) in
             mortgageList?.removeAll()
             savingsList?.removeAll()
             
-            updateCalcHistory()
+            updateCalcHistory(self.calcType!)
             self.historyTableView.reloadData()
         }))
 
@@ -42,10 +48,15 @@ class HistoryViewController: UIViewController {
         self.present(refreshAlert, animated: true, completion: nil)
     }
     
+    @IBAction func popViewToPreviousScreen(_ sender: UIBarButtonItem) {
+        
+        self.navigationController?.popViewController(animated: true)
+    }
+    
     @IBAction func viewHelpScreen(_ sender: UIBarButtonItem) {
         
         let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        if let destVC = storyBoard.instantiateViewController(withIdentifier: "helpView") as? HelpViewController {
+        if let destVC = storyBoard.instantiateViewController(withIdentifier: "InstructionsHelpView") as? InstructionsHelpViewController {
             
             destVC.modalTransitionStyle = .crossDissolve
             self.navigationController?.present(destVC, animated: true)
@@ -153,7 +164,7 @@ extension HistoryViewController: UITableViewDelegate, UITableViewDataSource {
                 mortgageList?.remove(at: removeIdx)
             }
             
-            updateCalcHistory()
+            updateCalcHistory(self.calcType!)
             historyTableView.reloadData()
         }
     }
@@ -178,6 +189,7 @@ extension HistoryViewController: UITableViewDelegate, UITableViewDataSource {
                 let selectedIdx: Int = getSelectedIndexPathRowNumber(from: indexPath)
                 destVC.prevSaving = savings[selectedIdx]
                 destVC.isCompoundSaving = savings[selectedIdx].isCompoundSaving
+                destVC.navigationTitle = savings[selectedIdx].isCompoundSaving ? "Compound Savings" :"Simple Savings"
             }
             
             self.navigationController!.pushViewController(destVC, animated: true)

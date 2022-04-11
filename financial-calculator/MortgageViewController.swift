@@ -64,6 +64,10 @@ class MortgageViewController: UIViewController {
     func configureTextFields() {
         for txtField: UITextField in txtFieldCollection {
             
+            if #available(iOS 13.0, *) {
+                txtField.overrideUserInterfaceStyle = .light
+            }
+            
             txtField.delegate = self
             getTextFromTextField(txtField)
         }
@@ -188,6 +192,20 @@ class MortgageViewController: UIViewController {
         
     }
     
+    @IBAction func viewMortgageCalculationHistory(_ sender: UIButton) {
+        
+        let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        if let destVC = storyBoard.instantiateViewController(withIdentifier: "historyView") as? HistoryViewController {
+            destVC.calcType = .mortgage
+            self.navigationController!.pushViewController(destVC, animated: true)
+        }
+        
+    }
+    
+    @IBAction func popToRootView(_ sender: UIBarButtonItem) {
+        self.navigationController?.popToRootViewController(animated: true)
+    }
+    
     @IBAction func clearAllTextFields(_ sender: UIBarButtonItem) {
         clearAllFields()
     }
@@ -205,7 +223,7 @@ class MortgageViewController: UIViewController {
     @IBAction func viewHelpScreen(_ sender: UIBarButtonItem) {
         
         let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        if let destVC = storyBoard.instantiateViewController(withIdentifier: "helpView") as? HelpViewController {
+        if let destVC = storyBoard.instantiateViewController(withIdentifier: "InstructionsHelpView") as? InstructionsHelpViewController {
             
             destVC.modalTransitionStyle = .crossDissolve
             self.navigationController?.present(destVC, animated: true)

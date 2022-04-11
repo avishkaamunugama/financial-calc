@@ -7,6 +7,10 @@
 
 import Foundation
 
+enum CalculationType {
+  case mortgage, simpleSaving, compoundSaving, all
+}
+
 let mortgageKey: String = "mortgage-list"
 let savingsKey: String = "savings-list"
 
@@ -62,11 +66,50 @@ func fetchSavings() -> [Saving]? {
     return savedSavings
 }
 
-func updateCalcHistory() {
-    pastCalculations = (mortgageList! + savingsList!)
-}
-
 func round(number num:Double, to dp:Int) -> String {
+    
+    if num == 0.0 {
+        return ""
+    }
     return String(format: "%.\(dp)f", num)
 }
 
+func updateCalcHistory(_ calcType:CalculationType) {
+    
+    switch calcType {
+    case .mortgage:
+        pastCalculations = mortgageList!
+    case .simpleSaving:
+        pastCalculations = returnSimpleSavings()
+    case .compoundSaving:
+        pastCalculations = returnCompundSavings()
+    case .all:
+        pastCalculations = (mortgageList! + savingsList!)
+    }
+}
+
+func returnCompundSavings() -> [Saving] {
+    
+    var compSavings:[Saving] = []
+    
+    for calc in savingsList! {
+        if calc.isCompoundSaving {
+            compSavings.append(calc)
+        }
+    }
+    
+    return compSavings
+}
+
+func returnSimpleSavings() -> [Saving]? {
+    
+    var simpSavings:[Saving]  = []
+    
+    for saving in savingsList! {
+        if !(saving.isCompoundSaving) {
+            simpSavings.append(saving)
+        }
+    }
+    
+    return simpSavings
+}
