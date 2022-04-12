@@ -90,7 +90,7 @@ func returnCompundSavings() -> [Saving] {
 }
 
 // From a list of savings return the simple savings in it
-func returnSimpleSavings() -> [Saving]? {
+func returnSimpleSavings() -> [Saving] {
     
     var simpSavings:[Saving]  = []
     

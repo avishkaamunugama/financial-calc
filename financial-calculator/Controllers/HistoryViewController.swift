@@ -128,6 +128,7 @@ extension HistoryViewController: UITableViewDelegate, UITableViewDataSource {
             \t- Principle Amount: $\(round(number: sCalc!.principleAmount, to: 2))
             \t- Interest Rate: \(round(number: sCalc!.interestRate, to: 2))%
             \t- Monthly Payment: $\(round(number: sCalc!.monthlyPayment, to: 2))
+            \t- Future Value: $\(round(number: sCalc!.futureValue, to: 2))
             \t- Number of Payments: \(round(number: sCalc!.numberOfPayments, to: 2)) \(sYearStr)
             """
         }
@@ -197,9 +198,24 @@ extension HistoryViewController: UITableViewDelegate, UITableViewDataSource {
             // If not nil defines the calculation details in the instantiated view controller
             if let savings = savingsList {
                 let selectedIdx: Int = getSelectedIndexPathRowNumber(from: indexPath)
-                destVC.prevSaving = savings[selectedIdx]
-                destVC.isCompoundSaving = savings[selectedIdx].isCompoundSaving
-                destVC.navigationTitle = savings[selectedIdx].isCompoundSaving ? "Compound Savings" :"Simple Savings"
+                
+                if calcType == .compoundSaving {
+                    let compoundCalcs:[Saving] = returnCompundSavings()
+                    destVC.prevSaving = compoundCalcs[selectedIdx]
+                    destVC.isCompoundSaving = compoundCalcs[selectedIdx].isCompoundSaving
+                    destVC.navigationTitle = "Compound Savings"
+                }
+                else if calcType == .simpleSaving {
+                    let simpleCalcs:[Saving] = returnSimpleSavings()
+                    destVC.prevSaving = simpleCalcs[selectedIdx]
+                    destVC.isCompoundSaving = simpleCalcs[selectedIdx].isCompoundSaving
+                    destVC.navigationTitle = "Simple Savings"
+                }
+                else {
+                    destVC.prevSaving = savings[selectedIdx]
+                    destVC.isCompoundSaving = savings[selectedIdx].isCompoundSaving
+                    destVC.navigationTitle = savings[selectedIdx].isCompoundSaving ? "Compound Savings" : "Simple Savings"
+                }
             }
             
             self.navigationController!.pushViewController(destVC, animated: true)
