@@ -3,7 +3,16 @@ A financial calculator app built using Swift. The calculator supports loan/mortg
 
 Below are some screenshots of the app. 
 
-![alt text](https://github.com/[username]/[reponame]/blob/[branch]/image.jpg?raw=true)
+<img src="https://github.com/avishkaamunugama/financial-calculator/blob/main/screenshots/Simulator%20Screen%20Shot%20-%20iPhone%2013%20Pro%20-%202022-04-12%20at%2013.13.18.png" width="250"><img src="https://github.com/avishkaamunugama/financial-calculator/blob/main/screenshots/Simulator%20Screen%20Shot%20-%20iPhone%2013%20Pro%20-%202022-04-12%20at%2013.22.08.png" width="250">
+
+<img src="https://github.com/avishkaamunugama/financial-calculator/blob/main/screenshots/Simulator%20Screen%20Shot%20-%20iPhone%2013%20Pro%20-%202022-04-12%20at%2013.19.34.png" width="250"><img src="https://github.com/avishkaamunugama/financial-calculator/blob/main/screenshots/Simulator%20Screen%20Shot%20-%20iPhone%2013%20Pro%20-%202022-04-12%20at%2013.20.49.png" width="250">
+
+<img src="https://github.com/avishkaamunugama/financial-calculator/blob/main/screenshots/Simulator%20Screen%20Shot%20-%20iPhone%2013%20Pro%20-%202022-04-12%20at%2013.20.57.png" width="250"><img src="https://github.com/avishkaamunugama/financial-calculator/blob/main/screenshots/Simulator%20Screen%20Shot%20-%20iPhone%2013%20Pro%20-%202022-04-12%20at%2013.21.17.png" width="250">
+
+<img src="https://github.com/avishkaamunugama/financial-calculator/blob/main/screenshots/Simulator%20Screen%20Shot%20-%20iPhone%2013%20Pro%20-%202022-04-12%20at%2013.19.50.png" width="250"><img src="https://github.com/avishkaamunugama/financial-calculator/blob/main/screenshots/Simulator%20Screen%20Shot%20-%20iPhone%2013%20Pro%20-%202022-04-12%20at%2013.21.26.png" width="250">
+
+
+
 
 
 Some key features of the app:
