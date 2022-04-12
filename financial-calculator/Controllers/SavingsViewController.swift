@@ -63,7 +63,16 @@ class SavingsViewController: UIViewController {
     }
     
     // Loads the last saved calculation
-    func loadPreviousCalculation(){
+    func loadPreviousCalculation() {
+        
+        if prevSaving == nil {
+            loadPreviousBasedOnCalculationType()
+        }
+        saving = prevSaving
+    }
+    
+    // Loads the last calculation depending on the type of calculation
+    func loadPreviousBasedOnCalculationType(){
         
         if savingsList!.count > 0 {
             var lastSaving:Saving? = Saving()
@@ -138,15 +147,23 @@ class SavingsViewController: UIViewController {
             break
         }
         
-        loadPreviousCalculation()
+        loadPreviousBasedOnCalculationType()
         populateFields()
+        checkIfCalculationsPossible()
     }
     
     // Finds the empty field and calculate the value
     @IBAction func calculateMissingFields(_ sender: Any) {
         
+        // Validate entered fields
         if emptyFieldCount() > 1 {
             displayAlert(withTitle: "Multiple Empty Fields Found!", withMessage: "Please ONLY leave the field that needs to be calculated blank for the calculations to proceed. Only 1 field can be calculated once.", viewController: self)
+            return
+        }
+        else if self.principleAmount > self.futureValue &&
+                    !txtFieldCollection[0].text!.isEmpty &&
+                    !txtFieldCollection[3].text!.isEmpty {
+            displayAlert(withTitle: "Invalid Inputs!", withMessage: "The principle amount is larger than the future amount. Please recheck the values and try again.",viewController: self)
             return
         }
         
@@ -163,6 +180,12 @@ class SavingsViewController: UIViewController {
 
         if txtFieldCollection[0].text!.isEmpty {
             self.principleAmount = CompundSavingsFormulae.calculateCompundPrincipleAmount(inYears: showInYears, savingsDetail: saving!)
+            
+            if self.principleAmount.isNaN || self.principleAmount.isInfinite || self.principleAmount < 0 {
+                displayAlert(withTitle: "Calculation Error!", withMessage: "Maximum principle amount exceeded. Please recheck the values and try again.", viewController: self)
+                return
+            }
+            
             txtFieldCollection[0].text = round(number: self.principleAmount, to: 2)
         }
         else if txtFieldCollection[1].text!.isEmpty {
@@ -171,14 +194,32 @@ class SavingsViewController: UIViewController {
         }
         else if txtFieldCollection[2].text!.isEmpty {
             self.monthlyPayment = CompundSavingsFormulae.calculateCompundMonthlyPayment(inYears: showInYears, savingsDetail: saving!)
+            
+            if self.monthlyPayment.isNaN || self.monthlyPayment.isInfinite || self.monthlyPayment < 0 {
+                displayAlert(withTitle: "Calculation Error!", withMessage: "Maximum monthly payment allowed exceeded. Please recheck the values and try again.", viewController: self)
+                return
+            }
+            
             txtFieldCollection[2].text = round(number: self.monthlyPayment, to: 2)
         }
         else if txtFieldCollection[3].text!.isEmpty {
             self.futureValue = CompundSavingsFormulae.calculateCompundFutureValue(inYears: showInYears, savingsDetail: saving!)
+            
+            if self.futureValue.isNaN || self.futureValue.isInfinite || self.futureValue < 0 {
+                displayAlert(withTitle: "Calculation Error!", withMessage: "Maximum future value exceeded. Please recheck the values and try again.", viewController: self)
+                return
+            }
+            
             txtFieldCollection[3].text = round(number: self.futureValue, to: 2)
         }
         else if txtFieldCollection[4].text!.isEmpty {
             self.numberOfPayments = CompundSavingsFormulae.calculateCompoundNumberOfPayments(inYears: showInYears, savingsDetail: saving!)
+            
+            if self.numberOfPayments.isNaN || self.numberOfPayments.isInfinite || self.numberOfPayments < 0 {
+                displayAlert(withTitle: "Calculation Error!", withMessage: "Maximum number of payments exceeded. Please recheck the values and try again.", viewController: self)
+                return
+            }
+            
             txtFieldCollection[4].text = round(number: self.numberOfPayments, to: 2)
         }
         else {
@@ -196,18 +237,42 @@ class SavingsViewController: UIViewController {
 
         if txtFieldCollection[0].text!.isEmpty {
             self.principleAmount = SimpleSavingsFormulae.calculateSimplePrincipleAmount(inYears: showInYears, savingsDetail: saving!)
+            
+            if self.principleAmount.isNaN || self.principleAmount.isInfinite || self.principleAmount < 0 {
+                displayAlert(withTitle: "Calculation Error!", withMessage: "Maximum principle amount exceeded. Please recheck the values and try again.", viewController: self)
+                return
+            }
+            
             txtFieldCollection[0].text = round(number: self.principleAmount, to: 2)
         }
         else if txtFieldCollection[1].text!.isEmpty {
             self.interestRate = SimpleSavingsFormulae.calculateSimpleInterestRate(inYears: showInYears, savingsDetail: saving!)
+            
+            if self.interestRate.isNaN || self.interestRate.isInfinite || self.interestRate < 0 {
+                displayAlert(withTitle: "Calculation Error!", withMessage: "Maximum interest rate exceeded. Please recheck the values and try again.", viewController: self)
+                return
+            }
+            
             txtFieldCollection[1].text = round(number: self.interestRate, to: 2)
         }
         else if txtFieldCollection[3].text!.isEmpty {
             self.futureValue = SimpleSavingsFormulae.calculateSimpleFutureValue(inYears: showInYears, savingsDetail: saving!)
+            
+            if self.futureValue.isNaN || self.futureValue.isInfinite || self.futureValue < 0 {
+                displayAlert(withTitle: "Calculation Error!", withMessage: "Maximum future value exceeded. Please recheck the values and try again.", viewController: self)
+                return
+            }
+            
             txtFieldCollection[3].text = round(number: self.futureValue, to: 2)
         }
         else if txtFieldCollection[4].text!.isEmpty {
             self.numberOfPayments = SimpleSavingsFormulae.calculateSimpleNumberOfPayments(inYears: showInYears, savingsDetail: saving!)
+            
+            if self.numberOfPayments.isNaN || self.numberOfPayments.isInfinite || self.numberOfPayments < 0 {
+                displayAlert(withTitle: "Calculation Error!", withMessage: "Maximum number of payments exceeded. Please recheck the values and try again.", viewController: self)
+                return
+            }
+            
             txtFieldCollection[4].text = round(number: self.numberOfPayments, to: 2)
         }
         else {
@@ -230,7 +295,7 @@ class SavingsViewController: UIViewController {
                 continue
             }
             
-            if txtField.text!.isEmpty || Int(txtField.text!) == 0 {
+            if txtField.text!.isEmpty {
                 emptyFieldCount += 1
             }
         }
@@ -270,7 +335,7 @@ class SavingsViewController: UIViewController {
         
         saveImgView!.image = saveImgView!.image?.withRenderingMode(.alwaysTemplate)
         
-        if isBtnEnabled{
+        if isBtnEnabled && emptyFieldCount() == 0 {
             self.saveButtonView.alpha = 1.0
             saveBtn!.tintColor = .tintColor
             saveImgView!.tintColor = .tintColor
@@ -333,9 +398,7 @@ class SavingsViewController: UIViewController {
     // Save button action
     @IBAction func saveSaving(_ sender: Any) {
         
-        let maxEmptyFields:Int = isCompoundSaving ? 5 : 4
-        
-        if let saving = self.saving, emptyFieldCount() < maxEmptyFields {
+        if let saving = self.saving, emptyFieldCount() == 0 {
             savingsList?.append(saving)
             clearAllFields()
         }
@@ -413,6 +476,7 @@ extension SavingsViewController: UITextFieldDelegate {
         getTextFromTextField(textField)
         updateSavingsModel()
         checkIfCalculationsPossible()
+        updateSaveButtonState(true)
     }
     
     // Triggers when the clear button on each text field is tapped. Zeros the value and update the model
@@ -438,6 +502,7 @@ extension SavingsViewController: UITextFieldDelegate {
         
         updateSavingsModel()
         checkIfCalculationsPossible()
+        updateSaveButtonState(true)
         
         return true
     }

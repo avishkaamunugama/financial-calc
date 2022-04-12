@@ -9,12 +9,11 @@ import UIKit
 
 class MortgageViewController: UIViewController {
     
-// txtFieldCollection :  Order
+    // txtFieldCollection :  Order
     //    0 - Borrowing amount
     //    1 - Interest rate
     //    2 - Monthly payment
     //    3 - Number of payments
-    
     
     // Outlets
     @IBOutlet var txtFieldCollection: [UITextField]!
@@ -51,6 +50,8 @@ class MortgageViewController: UIViewController {
         if prevMorgage == nil && mortgageList!.count > 0 {
             prevMorgage = mortgageList?.last
         }
+        
+        mortgage = prevMorgage
     }
     
     // Populate the fields with last calculation details
@@ -94,13 +95,26 @@ class MortgageViewController: UIViewController {
     // Finds the empty field and calculate the value
     @IBAction func calculateMissingField(_ sender: Any) {
         
+        // Validate entered fields
         if emptyFieldCount() > 1 {
             displayAlert(withTitle: "Multiple Empty Fields Found!", withMessage: "Please ONLY leave the field that needs to be calculated blank for the calculations to proceed. Only 1 field can be calculated once.",viewController: self)
+            return
+        }
+        else if self.monthlyPayment > self.borrowingAmount &&
+                    !txtFieldCollection[0].text!.isEmpty &&
+                    !txtFieldCollection[2].text!.isEmpty {
+            displayAlert(withTitle: "Invalid Inputs!", withMessage: "The monthly payment value is larger than the borrowing amount. Please recheck the values and try again.",viewController: self)
             return
         }
         
         if txtFieldCollection[0].text!.isEmpty {
             self.borrowingAmount = MortgageFormulae.calculateBorrowingAmount(inYears: showInYears, mortgageDetail: mortgage!)
+            
+            if self.borrowingAmount.isNaN || self.borrowingAmount.isInfinite || self.borrowingAmount < 0 {
+                displayAlert(withTitle: "Calculation Error!", withMessage: "Maximum borrowable amount exceeded. Try reducing borrowing amount or increasing the monthly payment.", viewController: self)
+                return
+            }
+            
             txtFieldCollection[0].text = round(number: self.borrowingAmount, to: 2)
         }
         else if txtFieldCollection[1].text!.isEmpty {
@@ -110,10 +124,21 @@ class MortgageViewController: UIViewController {
         else if txtFieldCollection[2].text!.isEmpty {
             self.monthlyPayment = MortgageFormulae.calculateMonthlyPayment(inYears: showInYears, mortgageDetail: mortgage!)
             
+            if self.monthlyPayment.isNaN || self.monthlyPayment.isInfinite || self.monthlyPayment < 0 {
+                displayAlert(withTitle: "Calculation Error!", withMessage: "Maximum payable monthly payment exceeded. Try reducing borrowing amount or increasing the monthly payment.", viewController: self)
+                return
+            }
+            
             txtFieldCollection[2].text = round(number: self.monthlyPayment, to: 2)
         }
         else if txtFieldCollection[3].text!.isEmpty {
             self.numberOfPayments = MortgageFormulae.calculateNumberOfPayments(inYears: showInYears, mortgageDetail: mortgage!)
+            
+            if self.numberOfPayments.isNaN || self.numberOfPayments.isInfinite || self.numberOfPayments < 0 {
+                displayAlert(withTitle: "Calculation Error!", withMessage: "Maximum number of months exceeded. Try reducing borrowing amount or increasing the monthly payment.", viewController: self)
+                return
+            }
+            
             txtFieldCollection[3].text = round(number: self.numberOfPayments, to: 2)
         }
         else {
@@ -132,7 +157,7 @@ class MortgageViewController: UIViewController {
 
         for txtField: UITextField in txtFieldCollection {
             
-            if txtField.text!.isEmpty || Int(txtField.text!) == 0 {
+            if txtField.text!.isEmpty {
                 emptyFieldCount += 1
             }
         }
@@ -172,7 +197,7 @@ class MortgageViewController: UIViewController {
         
         saveImgView!.image = saveImgView!.image?.withRenderingMode(.alwaysTemplate)
         
-        if isBtnEnabled{
+        if isBtnEnabled && emptyFieldCount() == 0 {
             self.saveButtonView.alpha = 1.0
             saveBtn!.tintColor = .tintColor
             saveImgView!.tintColor = .tintColor
@@ -233,7 +258,7 @@ class MortgageViewController: UIViewController {
     // Save button action
     @IBAction func saveMortgage(_ sender: Any) {
         
-        if let mortgage = self.mortgage, emptyFieldCount() < 4 {
+        if let mortgage = self.mortgage, emptyFieldCount() == 0 {
             mortgageList?.append(mortgage)
             clearAllFields()
         }
@@ -299,6 +324,7 @@ extension MortgageViewController: UITextFieldDelegate {
         getTextFromTextField(textField)
         updateMortgageModel()
         checkIfCalculationsPossible()
+        updateSaveButtonState(true)
     }
     
     // Triggers when the clear button on each text field is tapped. Zeros the value and update the model
@@ -321,6 +347,7 @@ extension MortgageViewController: UITextFieldDelegate {
         
         updateMortgageModel()
         checkIfCalculationsPossible()
+        updateSaveButtonState(true)
         
         return true
     }

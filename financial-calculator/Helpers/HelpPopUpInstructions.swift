@@ -58,7 +58,7 @@ func historyViewHelpInstructions() -> NSAttributedString {
     let attributedTxt:NSAttributedString = NSMutableAttributedString()
         .bold("1").normal(" - Delete all saved calculations from history.\n")
         .bold("2").normal(" - Swipe left and click delete button that then appears to delete a single calculation.\n")
-        .bold("3").normal(" - Click on any calculation to edit.\n\n")
+        .bold("3").normal(" - Click on any calculation to edit or re-calculate.\n\n")
         .normal("For help regarding formulas or any other please check the main help page.\n")
         
     return attributedTxt
