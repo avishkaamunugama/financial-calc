@@ -16,13 +16,17 @@ class SavingsViewController: UIViewController {
     //    3 - Future Value
     //    4 - Number of Payments
     
+    // Outlets
     @IBOutlet var txtFieldCollection: [UITextField]!
     @IBOutlet weak var btnCalculateSavings: UIButton!
+    @IBOutlet weak var saveButtonView: UIView!
     @IBOutlet weak var segmentedControl: UISegmentedControl!
     @IBOutlet weak var showInYearsSwitch: UISwitch!
-    
     @IBOutlet weak var monthlyPaymentView: UIStackView!
     
+    // Instance variables
+    var saving : Saving?
+    var prevSaving : Saving?
     var principleAmount: Double = 0.0
     var interestRate: Double = 0.0
     var monthlyPayment: Double = 0.0
@@ -31,34 +35,40 @@ class SavingsViewController: UIViewController {
     var isCompoundSaving: Bool = false
     var showInYears: Bool = false
     var navigationTitle: String = "Savings"
-    
-    var saving : Saving?
-    var prevSaving : Saving?
+    var isAbleToCalculate: Bool = false {
+        didSet {
+            updateCalculateButtonState(isAbleToCalculate)
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let titleTextAttributes = [NSAttributedString.Key.foregroundColor:UIColor.white, NSAttributedString.Key.font:UIFont.systemFont(ofSize: 14.0, weight: .bold)]
-        self.segmentedControl.setTitleTextAttributes(titleTextAttributes, for: .selected)
-        
+        applyTheme()
         loadPreviousCalculation()
         populateFields()
         configureGestures()
+        checkIfCalculationsPossible()
+        updateSaveButtonState(false)
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        self.title = navigationTitle
-        self.navigationController?.setNavigationBarHidden(false, animated: true)
+        self.title = navigationTitle // Sets the savings type title
     }
     
+    // Apply color and font configurations
+    func applyTheme(){
+        let titleTextAttributes = [NSAttributedString.Key.foregroundColor:UIColor.white, NSAttributedString.Key.font:UIFont.systemFont(ofSize: 14.0, weight: .bold)]
+        self.segmentedControl.setTitleTextAttributes(titleTextAttributes, for: .selected)
+    }
+    
+    // Loads the last saved calculation
     func loadPreviousCalculation(){
         
         if savingsList!.count > 0 {
-            
             var lastSaving:Saving? = Saving()
 
             for i in 1...savingsList!.count {
-
                 if let previous = savingsList?[savingsList!.count - i], previous.isCompoundSaving == self.isCompoundSaving {
                     lastSaving = savingsList?[savingsList!.count - i]
                     break
@@ -69,6 +79,7 @@ class SavingsViewController: UIViewController {
         }
     }
     
+    // Populate the fields with last calculation details
     func populateFields() {
         if let lastSaving = prevSaving {
             txtFieldCollection[0].text = round(number: lastSaving.principleAmount, to: 2)
@@ -86,6 +97,7 @@ class SavingsViewController: UIViewController {
         
         for txtField: UITextField in txtFieldCollection {
             
+            // prevents text field UI changing once the color mode is chnaged
             if #available(iOS 13.0, *) {
                 txtField.overrideUserInterfaceStyle = .light
             }
@@ -95,6 +107,7 @@ class SavingsViewController: UIViewController {
         }
     }
     
+    // Adds a tap gesture recogniser to dismiss keyboard when tapped anywhere
     func configureGestures() {
 
         let tap = UITapGestureRecognizer(target: self, action: #selector(self.handleTap(_:)))
@@ -102,12 +115,14 @@ class SavingsViewController: UIViewController {
         self.view.isUserInteractionEnabled = true
     }
     
+    // Handles tap gesture by hiding the keyboard
     @objc func handleTap(_ sender: UITapGestureRecognizer) {
         for txtField: UITextField in txtFieldCollection {
             txtField.resignFirstResponder()
         }
     }
     
+    // Segmented control action - switches beween simple and compund saving calculations
     @IBAction func changedSavingsType(_ sender: UISegmentedControl) {
         
         switch segmentedControl.selectedSegmentIndex {
@@ -127,10 +142,11 @@ class SavingsViewController: UIViewController {
         populateFields()
     }
     
+    // Finds the empty field and calculate the value
     @IBAction func calculateMissingFields(_ sender: Any) {
         
         if emptyFieldCount() > 1 {
-            displayAlert(withTitle: "Multiple Empty Fields Found!", withMessage: "Please ONLY leave the field that needs to be calculated blank for the calculations to proceed. Only 1 field can be calculated once.")
+            displayAlert(withTitle: "Multiple Empty Fields Found!", withMessage: "Please ONLY leave the field that needs to be calculated blank for the calculations to proceed. Only 1 field can be calculated once.", viewController: self)
             return
         }
         
@@ -140,10 +156,9 @@ class SavingsViewController: UIViewController {
         else {
             simpleSavingCalculations()
         }
-        
-        updateSavingsModel()
     }
     
+    // Calculates the missing field in compound savings calculations
     func compoundSavingCalculations() {
 
         if txtFieldCollection[0].text!.isEmpty {
@@ -151,7 +166,7 @@ class SavingsViewController: UIViewController {
             txtFieldCollection[0].text = round(number: self.principleAmount, to: 2)
         }
         else if txtFieldCollection[1].text!.isEmpty {
-            displayAlert(withTitle: "Invalid Interest Rate!", withMessage: "To proceed with the calculations please enter a valid interest rate (%).")
+            displayAlert(withTitle: "Invalid Interest Rate!", withMessage: "To proceed with the calculations please enter a valid interest rate (%).", viewController: self)
             return
         }
         else if txtFieldCollection[2].text!.isEmpty {
@@ -167,11 +182,16 @@ class SavingsViewController: UIViewController {
             txtFieldCollection[4].text = round(number: self.numberOfPayments, to: 2)
         }
         else {
-            displayAlert(withTitle: "No Empty Fields Found!", withMessage: "Please leave the field that needs to be calculated blank for the calculations to proceed.")
+            displayAlert(withTitle: "No Empty Fields Found!", withMessage: "Please leave the field that needs to be calculated blank for the calculations to proceed.", viewController: self)
             return
         }
+        
+        updateSavingsModel()
+        checkIfCalculationsPossible()
+        updateSaveButtonState(true)
     }
     
+    // Calculates the missing field in simple savings calculations
     func simpleSavingCalculations() {
 
         if txtFieldCollection[0].text!.isEmpty {
@@ -191,18 +211,21 @@ class SavingsViewController: UIViewController {
             txtFieldCollection[4].text = round(number: self.numberOfPayments, to: 2)
         }
         else {
-            displayAlert(withTitle: "No Empty Fields Found!", withMessage: "Please leave the field that needs to be calculated blank for the calculations to proceed.")
+            displayAlert(withTitle: "No Empty Fields Found!", withMessage: "Please leave the field that needs to be calculated blank for the calculations to proceed.",viewController: self)
             return
         }
+        
+        updateSavingsModel()
+        checkIfCalculationsPossible()
+        updateSaveButtonState(true)
     }
     
+    // Counts the number of empty fields
     func emptyFieldCount()->Int {
         var emptyFieldCount: Int = 0
 
-        // Hide keyboard
         for txtField: UITextField in txtFieldCollection {
-            txtField.resignFirstResponder()
-            
+            // simple savings calculations does not have a monthly payment field
             if (txtField==txtFieldCollection[2]) && !isCompoundSaving {
                 continue
             }
@@ -214,13 +237,54 @@ class SavingsViewController: UIViewController {
         
         return emptyFieldCount
     }
-    
-    func displayAlert(withTitle title:String, withMessage message:String) {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-        self.present(alert, animated: true, completion: nil)
+        
+    // Sets the calculate button state
+    func updateCalculateButtonState(_ isBtnEnabled:Bool) {
+        
+        if isBtnEnabled{
+            self.btnCalculateSavings.alpha = 1.0
+            self.btnCalculateSavings.tintColor = .tintColor
+        }
+        else {
+            self.btnCalculateSavings.alpha = 0.5
+            self.btnCalculateSavings.tintColor = .gray
+        }
     }
     
+    // Checks if only one field in empty to calculate
+    func checkIfCalculationsPossible() {
+        if emptyFieldCount() == 1 {
+            self.isAbleToCalculate = true
+        }
+        else {
+            self.isAbleToCalculate = false
+        }
+    }
+    
+    // Sets the save button state
+    func updateSaveButtonState(_ isBtnEnabled:Bool) {
+        
+        let saveImgView = self.saveButtonView.viewWithTag(103) as? UIImageView
+        let saveBtnTxtLbl = self.saveButtonView.viewWithTag(104) as? UILabel
+        let saveBtn = self.saveButtonView.viewWithTag(105) as? UIButton
+        
+        saveImgView!.image = saveImgView!.image?.withRenderingMode(.alwaysTemplate)
+        
+        if isBtnEnabled{
+            self.saveButtonView.alpha = 1.0
+            saveBtn!.tintColor = .tintColor
+            saveImgView!.tintColor = .tintColor
+            saveBtnTxtLbl!.textColor = .tintColor
+        }
+        else {
+            self.saveButtonView.alpha = 0.5
+            saveBtn!.tintColor = .gray
+            saveImgView!.tintColor = .gray
+            saveBtnTxtLbl!.textColor = .gray
+        }
+    }
+    
+    // Updates the Saving instant variable
     func updateSavingsModel() {
         saving = Saving(
             principleAmount: self.principleAmount,
@@ -233,6 +297,7 @@ class SavingsViewController: UIViewController {
         )
     }
     
+    // Show Year Switch action
     @IBAction func showPaymentsNumInYears(_ sender: UISwitch) {
         
         if (sender as AnyObject).isOn {
@@ -245,6 +310,7 @@ class SavingsViewController: UIViewController {
         }
     }
     
+    // Change the number of months to years
     func changeToYears() {
         if let txt = self.txtFieldCollection[4].text, !txt.isEmpty {
             let numMonths = Double(txt) ?? 0.0
@@ -254,6 +320,7 @@ class SavingsViewController: UIViewController {
         }
     }
     
+    // Change the number of years to months
     func changeToMonths() {
         if let txt = self.txtFieldCollection[4].text, !txt.isEmpty {
             let numYears = Double(txt) ?? 0.0
@@ -263,7 +330,7 @@ class SavingsViewController: UIViewController {
         }
     }
     
-    
+    // Save button action
     @IBAction func saveSaving(_ sender: Any) {
         
         let maxEmptyFields:Int = isCompoundSaving ? 5 : 4
@@ -273,24 +340,50 @@ class SavingsViewController: UIViewController {
             clearAllFields()
         }
         else {
-            displayAlert(withTitle: "No Calculations Performed!", withMessage: "Please perform some changes to previous calculation or perform a new calculation before saving.")
+            displayAlert(withTitle: "No Calculations Performed!", withMessage: "Please perform some changes to previous calculation or perform a new calculation before saving.", viewController: self)
         }
     }
     
+    // History button action
+    @IBAction func viewSavingsCalculationHistory(_ sender: UIButton) {
+        
+        let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        if let destVC = storyBoard.instantiateViewController(withIdentifier: "historyView") as? HistoryViewController {
+            
+            if isCompoundSaving {
+                destVC.calcType = .compoundSaving
+            }
+            else{
+                destVC.calcType = .simpleSaving
+            }
+            
+            self.navigationController!.pushViewController(destVC, animated: true)
+        }
+    }
+    
+    // Back button action
+    @IBAction func popToRootView(_ sender: UIBarButtonItem) {
+        self.navigationController?.popToRootViewController(animated: true)
+    }
+    
+    // Clear all button action
     @IBAction func clearAllTextFields(_ sender: UIBarButtonItem) {
         clearAllFields()
     }
     
+    // Clears all fields and resets the view to original state
     func clearAllFields(){
         for txtField: UITextField in txtFieldCollection {
             txtField.resignFirstResponder()
             txtField.text = ""
             getTextFromTextField(txtField)
+            updateSaveButtonState(false)
         }
         
         showInYearsSwitch.setOn(false, animated: true)
     }
     
+    // Help button action
     @IBAction func viewHelpScreen(_ sender: UIBarButtonItem) {
         
         let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
@@ -309,37 +402,23 @@ class SavingsViewController: UIViewController {
             self.navigationController?.present(destVC, animated: true)
         }
     }
-    
-    @IBAction func popToRootView(_ sender: UIBarButtonItem) {
-        self.navigationController?.popToRootViewController(animated: true)
-    }
-    
-    @IBAction func viewSavingsCalculationHistory(_ sender: UIButton) {
-        
-        let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        if let destVC = storyBoard.instantiateViewController(withIdentifier: "historyView") as? HistoryViewController {
-            
-            if isCompoundSaving {
-                destVC.calcType = .compoundSaving
-            }
-            else{
-                destVC.calcType = .simpleSaving
-            }
-            
-            self.navigationController!.pushViewController(destVC, animated: true)
-        }
-    }
 }
 
 
+// TextField delegate functions
 extension SavingsViewController: UITextFieldDelegate {
     
+    // Triggered when a textfield is changed - updates the morgage model
     func textFieldDidChangeSelection(_ textField: UITextField) {
         getTextFromTextField(textField)
         updateSavingsModel()
+        checkIfCalculationsPossible()
     }
     
+    // Triggers when the clear button on each text field is tapped. Zeros the value and update the model
     func textFieldShouldClear(_ textField: UITextField) -> Bool {
+        
+        textField.text = ""
         
         if textField == self.txtFieldCollection[0] {
             self.principleAmount = 0.0
@@ -358,10 +437,13 @@ extension SavingsViewController: UITextFieldDelegate {
         }
         
         updateSavingsModel()
+        checkIfCalculationsPossible()
         
         return true
     }
     
+    // Reads the values entered by user in textfields
+    // If any invalid characters are types they are Zeroed
     func getTextFromTextField(_ textField: UITextField) {
         
         if textField == self.txtFieldCollection[0] {

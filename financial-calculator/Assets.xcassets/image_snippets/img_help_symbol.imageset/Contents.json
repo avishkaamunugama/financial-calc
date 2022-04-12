@@ -3,6 +3,16 @@
     {
       "filename" : "img-help-symbol-1.png",
       "idiom" : "universal"
+    },
+    {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "Screen Shot 2022-04-11 at 7.52.58 PM.png",
+      "idiom" : "universal"
     }
   ],
   "info" : {

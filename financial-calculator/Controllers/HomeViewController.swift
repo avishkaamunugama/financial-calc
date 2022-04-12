@@ -11,18 +11,9 @@ class HomeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        self.navigationController?.setNavigationBarHidden(true, animated: true)
-    }
-    
-    @IBAction func viewHelpScreen(_ sender: UIButton) {
-        
-        
-    }
-    
+    // Simple Savings button action
     @IBAction func navigateToSimpleSavingsScreen(_ sender: UIButton) {
         
         let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
@@ -35,6 +26,8 @@ class HomeViewController: UIViewController {
         }
         
     }
+    
+    // Compound Savings button action
     @IBAction func navigateToCompoundSavingsScreen(_ sender: UIButton) {
         
         let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
@@ -46,6 +39,10 @@ class HomeViewController: UIViewController {
             self.navigationController!.pushViewController(destVC, animated: true)
         }
         
+    }
+    
+    @IBAction func viewHelpScreen(_ sender: UIButton) {
+        // This button is unavailable at the moment
     }
     
 }

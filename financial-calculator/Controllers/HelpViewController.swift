@@ -9,6 +9,7 @@ import UIKit
 
 class HelpViewController: UIViewController {
     
+    // Outlets
     @IBOutlet var darkSectionBackgroundViews: [UIView]!
     @IBOutlet var lightSectionBackgroundViews: [UIView]!
     
@@ -17,10 +18,7 @@ class HelpViewController: UIViewController {
         applyTheme()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        self.navigationController?.setNavigationBarHidden(false, animated: true)
-    }
-    
+    // Apply color and other UI configurations
     func applyTheme() {
         for bgView in darkSectionBackgroundViews{
             bgView.layer.masksToBounds=true

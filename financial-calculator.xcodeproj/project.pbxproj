@@ -12,6 +12,8 @@
 		EF2B122F27FEEEE900372A6B /* HelperFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2B122E27FEEEE900372A6B /* HelperFunctions.swift */; };
 		EF2B12312800AA8300372A6B /* SimpleSavingsFormulae.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2B12302800AA8300372A6B /* SimpleSavingsFormulae.swift */; };
 		EF2B123328019BC000372A6B /* CompundSavingsFormulae.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2B123228019BC000372A6B /* CompundSavingsFormulae.swift */; };
+		EF36A3FB2805294B001F5F1C /* GlobalVariables.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF36A3FA2805294B001F5F1C /* GlobalVariables.swift */; };
+		EF36A3FD28052B4C001F5F1C /* HelpPopUpInstructions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF36A3FC28052B4C001F5F1C /* HelpPopUpInstructions.swift */; };
 		EF4BB27D27FDE25F004ED89E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4BB27C27FDE25F004ED89E /* AppDelegate.swift */; };
 		EF4BB27F27FDE25F004ED89E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4BB27E27FDE25F004ED89E /* SceneDelegate.swift */; };
 		EF4BB28127FDE25F004ED89E /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4BB28027FDE25F004ED89E /* HomeViewController.swift */; };
@@ -32,6 +34,8 @@
 		EF2B122E27FEEEE900372A6B /* HelperFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelperFunctions.swift; sourceTree = "<group>"; };
 		EF2B12302800AA8300372A6B /* SimpleSavingsFormulae.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleSavingsFormulae.swift; sourceTree = "<group>"; };
 		EF2B123228019BC000372A6B /* CompundSavingsFormulae.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompundSavingsFormulae.swift; sourceTree = "<group>"; };
+		EF36A3FA2805294B001F5F1C /* GlobalVariables.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalVariables.swift; sourceTree = "<group>"; };
+		EF36A3FC28052B4C001F5F1C /* HelpPopUpInstructions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpPopUpInstructions.swift; sourceTree = "<group>"; };
 		EF4BB27927FDE25F004ED89E /* financial-calculator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "financial-calculator.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF4BB27C27FDE25F004ED89E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EF4BB27E27FDE25F004ED89E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -127,7 +131,9 @@
 		EF6FED8328046D84007DB052 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				EF36A3FA2805294B001F5F1C /* GlobalVariables.swift */,
 				EF2B122E27FEEEE900372A6B /* HelperFunctions.swift */,
+				EF36A3FC28052B4C001F5F1C /* HelpPopUpInstructions.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -211,7 +217,9 @@
 				EF4BB27D27FDE25F004ED89E /* AppDelegate.swift in Sources */,
 				EF2B122F27FEEEE900372A6B /* HelperFunctions.swift in Sources */,
 				EF4BB29827FE9365004ED89E /* MortgageFormulae.swift in Sources */,
+				EF36A3FD28052B4C001F5F1C /* HelpPopUpInstructions.swift in Sources */,
 				EF2B122D27FED99100372A6B /* HistoryViewController.swift in Sources */,
+				EF36A3FB2805294B001F5F1C /* GlobalVariables.swift in Sources */,
 				EF7DD4922803B5B2005B67C3 /* HelpTabBarViewController.swift in Sources */,
 				EF4BB29927FE9365004ED89E /* AppStructures.swift in Sources */,
 				EF4BB27F27FDE25F004ED89E /* SceneDelegate.swift in Sources */,

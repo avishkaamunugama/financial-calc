@@ -13,9 +13,8 @@ class HelpTabBarViewController: UITabBarController {
         super.viewDidLoad()
     }
     
+    // Back button action
     @IBAction func popViewToPreviousScreen(_ sender: UIBarButtonItem) {
-        
         self.navigationController?.popViewController(animated: true)
     }
-    
 }

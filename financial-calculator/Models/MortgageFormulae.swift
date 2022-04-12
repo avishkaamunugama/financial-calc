@@ -5,9 +5,13 @@
 //  Created by Avishka Amunugama on 4/6/22.
 //
 
+// For the exact latex mathematical formulaes used here please refer the FinancialFormula.pdf in main repository
+
 import Foundation
 
 class MortgageFormulae {
+    
+    // Calculates the monthly payment values based on other details provided
     static func calculateMonthlyPayment(inYears isYears:Bool, mortgageDetail:Mortgage)-> Double {
         let P: Double = mortgageDetail.borrowingAmount
         let r: Double = mortgageDetail.interestRate / 100.0
@@ -20,6 +24,7 @@ class MortgageFormulae {
         return f2
     }
     
+    // Calculates the number of payments required based on other details provided
     static func calculateNumberOfPayments(inYears isYears:Bool, mortgageDetail:Mortgage)-> Double {
         let P: Double = mortgageDetail.borrowingAmount
         let r: Double = mortgageDetail.interestRate / 100.0
@@ -33,6 +38,7 @@ class MortgageFormulae {
         return isYears ? f3/12 : f3
     }
     
+    // Calculates the max amount that can be borrowed based on other details provided
     static func calculateBorrowingAmount(inYears isYears:Bool, mortgageDetail:Mortgage)-> Double {
         let r: Double = mortgageDetail.interestRate / 100.0
         let pmt: Double = mortgageDetail.monthlyPayment

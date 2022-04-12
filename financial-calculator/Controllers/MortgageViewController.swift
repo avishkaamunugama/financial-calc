@@ -19,36 +19,42 @@ class MortgageViewController: UIViewController {
     // Outlets
     @IBOutlet var txtFieldCollection: [UITextField]!
     @IBOutlet weak var btnCalculate: UIButton!
-    @IBOutlet weak var btnSaveMortgage: UIButton!
+    @IBOutlet weak var saveButtonView: UIView!
     @IBOutlet weak var showInYearsSwitch: UISwitch!
     
-    // Instant variables
+    // Instance variables
+    var mortgage : Mortgage?
+    var prevMorgage : Mortgage?
     var borrowingAmount: Double = 0.0
     var interestRate: Double = 0.0
     var monthlyPayment: Double = 0.0
     var numberOfPayments: Double = 0.0
     var showInYears: Bool = false
-    
-    var mortgage : Mortgage?
-    var prevMorgage : Mortgage?
+    var isAbleToCalculate: Bool = false {
+        didSet {
+            updateCalculateButtonState(isAbleToCalculate)
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         loadPreviousCalculation()
-        configureTextFields()
+        populateFields()
+        configureGestures()
+        checkIfCalculationsPossible()
+        updateSaveButtonState(false)
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        self.navigationController?.setNavigationBarHidden(false, animated: true)
-    }
-    
-    // fills up the text fields with previous calculation details
+    // Loads the last saved calculation
     func loadPreviousCalculation() {
         if prevMorgage == nil && mortgageList!.count > 0 {
             prevMorgage = mortgageList?.last
         }
-        
+    }
+    
+    // Populate the fields with last calculation details
+    func populateFields() {
         if let lastMortgage = prevMorgage {
             txtFieldCollection[0].text = round(number: lastMortgage.borrowingAmount, to: 2)
             txtFieldCollection[1].text = round(number: lastMortgage.interestRate, to: 2)
@@ -58,12 +64,10 @@ class MortgageViewController: UIViewController {
             self.showInYears = lastMortgage.isShownInYears
             showInYearsSwitch.setOn(lastMortgage.isShownInYears, animated: true)
         }
-    }
-    
-    // text field delegate and main view gesture configs
-    func configureTextFields() {
+        
         for txtField: UITextField in txtFieldCollection {
             
+            // prevents text field UI changing once the color mode is chnaged
             if #available(iOS 13.0, *) {
                 txtField.overrideUserInterfaceStyle = .light
             }
@@ -71,24 +75,27 @@ class MortgageViewController: UIViewController {
             txtField.delegate = self
             getTextFromTextField(txtField)
         }
-        
+    }
+    
+    // Adds a tap gesture recogniser to dismiss keyboard when tapped anywhere
+    func configureGestures() {
         let tap = UITapGestureRecognizer(target: self, action: #selector(self.handleTap(_:)))
         self.view.addGestureRecognizer(tap)
         self.view.isUserInteractionEnabled = true
     }
     
-    // handles tap gesture by hiding the keyboard
+    // Handles tap gesture by hiding the keyboard
     @objc func handleTap(_ sender: UITapGestureRecognizer) {
         for txtField: UITextField in txtFieldCollection {
             txtField.resignFirstResponder()
         }
     }
     
-    // finds the empty field and calculate the value
+    // Finds the empty field and calculate the value
     @IBAction func calculateMissingField(_ sender: Any) {
         
         if emptyFieldCount() > 1 {
-            displayAlert(withTitle: "Multiple Empty Fields Found!", withMessage: "Please ONLY leave the field that needs to be calculated blank for the calculations to proceed. Only 1 field can be calculated once.")
+            displayAlert(withTitle: "Multiple Empty Fields Found!", withMessage: "Please ONLY leave the field that needs to be calculated blank for the calculations to proceed. Only 1 field can be calculated once.",viewController: self)
             return
         }
         
@@ -97,7 +104,7 @@ class MortgageViewController: UIViewController {
             txtFieldCollection[0].text = round(number: self.borrowingAmount, to: 2)
         }
         else if txtFieldCollection[1].text!.isEmpty {
-            displayAlert(withTitle: "Invalid Interest Rate!", withMessage: "To proceed with the calculations please enter a valid interest rate (%).")
+            displayAlert(withTitle: "Invalid Interest Rate!", withMessage: "To proceed with the calculations please enter a valid interest rate (%).",viewController: self)
             return
         }
         else if txtFieldCollection[2].text!.isEmpty {
@@ -110,19 +117,20 @@ class MortgageViewController: UIViewController {
             txtFieldCollection[3].text = round(number: self.numberOfPayments, to: 2)
         }
         else {
-            displayAlert(withTitle: "No Empty Fields Found!", withMessage: "Please leave the field that needs to be calculated blank for the calculations to proceed.")
+            displayAlert(withTitle: "No Empty Fields Found!", withMessage: "Please leave the field that needs to be calculated blank for the calculations to proceed.",viewController: self)
             return
         }
         
-        updateCurrentModel()
+        updateMortgageModel()
+        checkIfCalculationsPossible()
+        updateSaveButtonState(true)
     }
     
+    // Counts the number of empty fields
     func emptyFieldCount()->Int {
         var emptyFieldCount: Int = 0
 
-        // Hide keyboard
         for txtField: UITextField in txtFieldCollection {
-            txtField.resignFirstResponder()
             
             if txtField.text!.isEmpty || Int(txtField.text!) == 0 {
                 emptyFieldCount += 1
@@ -132,13 +140,54 @@ class MortgageViewController: UIViewController {
         return emptyFieldCount
     }
     
-    func displayAlert(withTitle title:String, withMessage message:String) {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-        self.present(alert, animated: true, completion: nil)
+    // Sets the calculate button state
+    func updateCalculateButtonState(_ isBtnEnabled:Bool) {
+        
+        if isBtnEnabled{
+            self.btnCalculate.alpha = 1.0
+            self.btnCalculate.tintColor = .tintColor
+        }
+        else {
+            self.btnCalculate.alpha = 0.5
+            self.btnCalculate.tintColor = .gray
+        }
     }
     
-    func updateCurrentModel() {
+    // Checks if only one field in empty to calculate
+    func checkIfCalculationsPossible() {
+        if emptyFieldCount() == 1 {
+            self.isAbleToCalculate = true
+        }
+        else {
+            self.isAbleToCalculate = false
+        }
+    }
+    
+    // Sets the save button state
+    func updateSaveButtonState(_ isBtnEnabled:Bool) {
+        
+        let saveImgView = self.saveButtonView.viewWithTag(103) as? UIImageView
+        let saveBtnTxtLbl = self.saveButtonView.viewWithTag(104) as? UILabel
+        let saveBtn = self.saveButtonView.viewWithTag(105) as? UIButton
+        
+        saveImgView!.image = saveImgView!.image?.withRenderingMode(.alwaysTemplate)
+        
+        if isBtnEnabled{
+            self.saveButtonView.alpha = 1.0
+            saveBtn!.tintColor = .tintColor
+            saveImgView!.tintColor = .tintColor
+            saveBtnTxtLbl!.textColor = .tintColor
+        }
+        else {
+            self.saveButtonView.alpha = 0.5
+            saveBtn!.tintColor = .gray
+            saveImgView!.tintColor = .gray
+            saveBtnTxtLbl!.textColor = .gray
+        }
+    }
+    
+    // Updates the Mortgage instant variable
+    func updateMortgageModel() {
         mortgage = Mortgage(
             borrowingAmount: self.borrowingAmount,
             interestRate: self.interestRate,
@@ -148,7 +197,7 @@ class MortgageViewController: UIViewController {
         )
     }
     
-    
+    // Show Year Switch action
     @IBAction func showPaymentsNumInYears(_ sender: UISwitch) {
         
         if (sender as AnyObject).isOn {
@@ -161,25 +210,27 @@ class MortgageViewController: UIViewController {
         }
     }
     
+    // Change the number of months to years
     func changeToYears() {
         if let txt = self.txtFieldCollection[3].text, !txt.isEmpty {
             let numMonths = Double(txt) ?? 0.0
             self.txtFieldCollection[3].text = round(number: numMonths/12, to: 2)
             self.numberOfPayments = numMonths/12
-            updateCurrentModel()
+            updateMortgageModel()
         }
     }
     
+    // Change the number of years to months
     func changeToMonths() {
         if let txt = self.txtFieldCollection[3].text, !txt.isEmpty {
             let numYears = Double(txt) ?? 0.0
             self.txtFieldCollection[3].text = round(number: numYears*12, to: 2)
             self.numberOfPayments = numYears*12
-            updateCurrentModel()
+            updateMortgageModel()
         }
     }
     
-    
+    // Save button action
     @IBAction func saveMortgage(_ sender: Any) {
         
         if let mortgage = self.mortgage, emptyFieldCount() < 4 {
@@ -187,11 +238,12 @@ class MortgageViewController: UIViewController {
             clearAllFields()
         }
         else {
-            displayAlert(withTitle: "No Calculations Performed!", withMessage: "Please perform some changes to previous calculation or perform a new calculation before saving.")
+            displayAlert(withTitle: "No Calculations Performed!", withMessage: "Please perform some changes to previous calculation or perform a new calculation before saving.",viewController: self)
         }
         
     }
     
+    // History button action
     @IBAction func viewMortgageCalculationHistory(_ sender: UIButton) {
         
         let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
@@ -199,27 +251,31 @@ class MortgageViewController: UIViewController {
             destVC.calcType = .mortgage
             self.navigationController!.pushViewController(destVC, animated: true)
         }
-        
     }
     
+    // Back button action
     @IBAction func popToRootView(_ sender: UIBarButtonItem) {
         self.navigationController?.popToRootViewController(animated: true)
     }
     
+    // Clear all button action
     @IBAction func clearAllTextFields(_ sender: UIBarButtonItem) {
         clearAllFields()
     }
     
+    // Clears all fields and resets the view to original state
     func clearAllFields(){
         for txtField: UITextField in txtFieldCollection {
             txtField.resignFirstResponder()
             txtField.text = ""
             getTextFromTextField(txtField)
+            updateSaveButtonState(false)
         }
         
         showInYearsSwitch.setOn(false, animated: true)
     }
     
+    // Help button action
     @IBAction func viewHelpScreen(_ sender: UIBarButtonItem) {
         
         let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
@@ -235,14 +291,20 @@ class MortgageViewController: UIViewController {
 }
 
 
+// TextField delegate functions
 extension MortgageViewController: UITextFieldDelegate {
     
+    // Triggered when a textfield is changed - updates the morgage model
     func textFieldDidChangeSelection(_ textField: UITextField) {
         getTextFromTextField(textField)
-        updateCurrentModel()
+        updateMortgageModel()
+        checkIfCalculationsPossible()
     }
     
+    // Triggers when the clear button on each text field is tapped. Zeros the value and update the model
     func textFieldShouldClear(_ textField: UITextField) -> Bool {
+        
+        textField.text = ""
         
         if textField == self.txtFieldCollection[0] {
             self.borrowingAmount = 0.0
@@ -257,11 +319,14 @@ extension MortgageViewController: UITextFieldDelegate {
             self.numberOfPayments = 0
         }
         
-        updateCurrentModel()
+        updateMortgageModel()
+        checkIfCalculationsPossible()
         
         return true
     }
     
+    // Reads the values entered by user in textfields
+    // If any invalid characters are types they are Zeroed
     func getTextFromTextField(_ textField: UITextField) {
         
         if textField == self.txtFieldCollection[0] {
@@ -276,7 +341,6 @@ extension MortgageViewController: UITextFieldDelegate {
         else if textField == self.txtFieldCollection[3] {
             self.numberOfPayments = Double(textField.text!) ?? 0.0
         }
-        
     }
 }
 

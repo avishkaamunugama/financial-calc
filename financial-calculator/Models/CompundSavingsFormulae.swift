@@ -5,10 +5,13 @@
 //  Created by Avishka Amunugama on 4/6/22.
 //
 
+// For the exact latex mathematical formulaes used here please refer the FinancialFormula.pdf in main repository
+
 import Foundation
 
 class CompundSavingsFormulae {
 
+    // Calculates the compound interest for principal of compound saving based on other details provided
     static func compundInterestForPrincipleAmount(_ isYears:Bool, _ savingsDetail:Saving)-> Double {
         let P: Double = savingsDetail.principleAmount
         let n: Double = 12
@@ -21,6 +24,7 @@ class CompundSavingsFormulae {
         return f2
     }
     
+    // Calculates the future value of series of compund saving based on other details provided
     static func compundFutureValueOfASeries(_ isYears:Bool, _ savingsDetail:Saving)-> Double {
         let PMT: Double = -1 * savingsDetail.monthlyPayment
         let n: Double = 12
@@ -34,17 +38,19 @@ class CompundSavingsFormulae {
         return -1 * f3
     }
     
+    // Calculates the future value of compund saving based on other details provided
+    // Future value = [ Compound interest for principal] + [ Future value of a series]
     static func calculateCompundFutureValue(inYears isYears:Bool, savingsDetail:Saving)-> Double {
-        
         let f1: Double = compundInterestForPrincipleAmount(isYears, savingsDetail)
         let f2: Double = compundFutureValueOfASeries(isYears, savingsDetail)
-        let f3: Double = f1 + f2
-        return f3
         
+        let f3: Double = f1 + f2
+        
+        return f3
     }
     
+    // Calculates the principle amount / present value of compund saving based on other details provided
     static func calculateCompundPrincipleAmount(inYears isYears:Bool, savingsDetail:Saving)-> Double {
-        
         let PMT: Double = savingsDetail.monthlyPayment
         let A: Double = savingsDetail.futureValue
         let n: Double = 12
@@ -59,8 +65,8 @@ class CompundSavingsFormulae {
         return f4
     }
     
+    // Calculates the amount that needs to be paid monthly of compund saving based on other details provided
     static func calculateCompundMonthlyPayment(inYears isYears:Bool, savingsDetail:Saving)-> Double {
-        
         let P: Double = savingsDetail.principleAmount
         let A: Double = savingsDetail.futureValue
         let n: Double = 12
@@ -74,11 +80,10 @@ class CompundSavingsFormulae {
         let f5: Double = f3/f4
         
         return f5
-        
     }
     
+    // Calculates the number of monthly payments required of compund saving based on other details provided
     static func calculateCompoundNumberOfPayments(inYears isYears:Bool, savingsDetail:Saving)-> Double {
-        
         let P: Double = savingsDetail.principleAmount
         let PMT: Double = savingsDetail.monthlyPayment
         let A: Double = savingsDetail.futureValue
@@ -91,6 +96,5 @@ class CompundSavingsFormulae {
         let f4 : Double = f2/f3
         
         return isYears ? f4 : f4*12
-        
     }
 }
