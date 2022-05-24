@@ -18,3 +18,6 @@ Below are some screenshots of the app.
 Some key features of the app:
 1. Data persistance using UserDefaults
 2. Seemless dark mode support.
+
+
+The sourcecode for the project will be available soon.
