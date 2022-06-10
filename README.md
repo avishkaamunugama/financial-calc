@@ -12,12 +12,6 @@ Below are some screenshots of the app.
 <img src="https://github.com/avishkaamunugama/financial-calculator/blob/main/screenshots/Simulator%20Screen%20Shot%20-%20iPhone%2013%20Pro%20-%202022-04-12%20at%2013.19.50.png" width="250"><img src="https://github.com/avishkaamunugama/financial-calculator/blob/main/screenshots/Simulator%20Screen%20Shot%20-%20iPhone%2013%20Pro%20-%202022-04-12%20at%2013.21.26.png" width="250">
 
 
-
-
-
 Some key features of the app:
 1. Data persistance using UserDefaults
 2. Seemless dark mode support.
-
-
-The sourcecode for the project will be available soon.
